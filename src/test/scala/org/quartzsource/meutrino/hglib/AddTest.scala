@@ -23,24 +23,23 @@ import org.quartzsource.meutrino._
 class AddTest extends AbstractHglibTest {
 
   @Test
-  def testBasic {
+  def testAdd {
     append("a", "a\n")
     assertTrue(client.add(List(QPath("a"))))
-    val (_, node0) = client.commit("first")
-    val cset0 = client(node0)
-    val manifest0 = cset0.manifest
-    assertEquals(1, manifest0.size)
-    assertTrue(manifest0.exists(t => t._1.path == "a"))
-    assertEquals(List(QPath("a")), cset0.added)
+    val (_, node0) = client.commit("first", addRemove = false)
+    val ctx0 = client(node0)
+    assertEquals(Map((QPath("a") -> QNodeId("b789fdd96dc2f3bd229c1dd8eedf0fc60e2b68e3"))), ctx0.manifest)
+    assertEquals(List(QPath("a")), ctx0.added)
+  }
 
+  @Test
+  def testAddRemove {
     append("b", "b\n")
     client.addRemove(Nil)
-    val (_, node1) = client.commit("second")
-    val cset1 = client(node1)
-    val manifest1 = cset1.manifest
-    assertEquals(2, manifest1.size)
-    assertTrue(manifest1.exists(t => t._1.path == "b"))
-    assertEquals(List(QPath("b")), cset1.added)
+    val (_, node0) = client.commit("first", addRemove = false)
+    val ctx0 = client(node0)
+    assertEquals(Map((QPath("b") -> QNodeId("1e88685f5ddec574a34c70af492f95b6debc8741"))), ctx0.manifest)
+    assertEquals(List(QPath("b")), ctx0.added)
   }
 
   @Test
