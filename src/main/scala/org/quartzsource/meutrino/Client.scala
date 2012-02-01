@@ -54,10 +54,8 @@ trait QRepository {
    * Detecting renamed files this way can be expensive. After using this
    * option, "hg status -C" can be used to check which files were identified as
    * moved or renamed.
-   *
-   * Return True if all files are successfully added.
    */
-  def addRemove(files: List[QPath], similarity: Int = 100): Boolean
+  def addRemove(files: List[QPath], similarity: Int = 100): Unit
 
   /**
    * Show changeset information by line for each file in files.
@@ -550,7 +548,7 @@ trait QRepository {
 trait JavaQRepository extends QRepository {
 
   def add(files: java.util.List[QPath]): Boolean = add(files.asScala.toList)
-  def addRemove(files: java.util.List[QPath], similarity: Int): Boolean = addRemove(files.asScala.toList, similarity)
+  def addRemove(files: java.util.List[QPath], similarity: Int): Unit = addRemove(files.asScala.toList, similarity)
   def remove(files: java.util.List[QPath]): Boolean = remove(files.asScala.toList)
   def getStatus: java.util.List[(QStatus, QPath)] = status(None).asJava
 }

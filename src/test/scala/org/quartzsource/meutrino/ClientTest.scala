@@ -35,7 +35,7 @@ class ClientTest extends AbstractTest {
     printToFile(new File(rootFolder, "file1.txt"))(p => {
       data.foreach(p.println)
     })
-    assertTrue(repo.addRemove(Nil, 100))
+    repo.addRemove(Nil, 100)
     val (_, revision) = repo.commit("Add file1.txt", Some("py4fun"), addRemove = false, date = new Date())
     //println(revision.node)
     repo.close

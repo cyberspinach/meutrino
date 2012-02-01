@@ -55,8 +55,7 @@ class BasicRepositoryTest extends AbstractRepositoryTest {
 
   @Test
   def testRepositoryAddRemove {
-    val done = repo.addRemove(Nil, 100)
-    assertTrue(done)
+    repo.addRemove(Nil, 100)
   }
 
   @Test

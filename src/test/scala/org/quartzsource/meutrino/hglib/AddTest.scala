@@ -34,7 +34,7 @@ class AddTest extends AbstractHglibTest {
     assertEquals(List(QPath("a")), cset0.added)
 
     append("b", "b\n")
-    assertTrue(client.addRemove(Nil))
+    client.addRemove(Nil)
     val (_, node1) = client.commit("second")
     val cset1 = client(node1)
     val manifest1 = cset1.manifest
@@ -47,8 +47,7 @@ class AddTest extends AbstractHglibTest {
   def testAddNonExisting {
     append("a", "a\n")
     assertFalse(client.add(List(QPath("b"))))
-    //TODO bug in Mercurial: addremove always returns 0 regardless of the result
-    assertTrue(client.addRemove(List(QPath("b"))))
+    client.addRemove(List(QPath("b")))
   }
 }
 

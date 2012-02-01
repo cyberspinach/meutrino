@@ -48,7 +48,7 @@ class LocalRepository(commandServer: CommandServer) extends QRepository with Jav
     runCommand[Boolean]("add", files.map(_.path))(processBoolean)
   }
 
-  def addRemove(files: List[QPath], similarity: Int): Boolean = {
+  def addRemove(files: List[QPath], similarity: Int) {
     require(similarity >= 0)
     require(similarity <= 100)
     runCommand[Boolean]("addremove", List("--similarity", similarity.toString()) ++

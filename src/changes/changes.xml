@@ -7,9 +7,12 @@
     </properties>
     <body>
         <release version="0.1-SNAPSHOT" date="in Mercurial" description="Development">
+            <action dev="py4fun" type="update">
+                QRepository.addRemove() returns Unit (2012-02-01)
+            </action>
             <action dev="py4fun" type="add">
                 Create project (2012-02-01)
-             </action>
+            </action>
         </release>
     </body>
 </document>
