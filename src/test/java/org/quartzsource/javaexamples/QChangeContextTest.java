@@ -57,9 +57,10 @@ public class QChangeContextTest {
 		assertEquals(ADDED$.MODULE$, added.get(0)._1);
 		// commit
 		Option<String> none = Option.apply(null);
+		Option<Date> now = Option.apply(new Date());
 
 		Tuple2<Object, QNodeId> node = repo.commit("desription1", none, none,
-				false, false, new Date());
+				false, false, now);
 		QChangeContext context = repo.apply(node._2);
 		List<QPath> files = Converter.listToJava(context.toList());
 		assertEquals(1, files.size());

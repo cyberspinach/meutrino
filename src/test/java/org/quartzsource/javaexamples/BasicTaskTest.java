@@ -63,9 +63,9 @@ public class BasicTaskTest {
 		assertEquals(ADDED$.MODULE$, added.get(0)._1);
 		// commit
 		Option<String> none = Option.apply(null);
-
+		Option<Date> now = Option.apply(new Date());
 		Tuple2<Object, QNodeId> node = repo.commit("desription1", none, none,
-				false, false, new Date());
+				false, false, now);
 		assertEquals(0, repo.getStatus().size());
 		assertTrue(node._2.getNode().matches("[0-9a-f]{40}"));
 		repo.close();

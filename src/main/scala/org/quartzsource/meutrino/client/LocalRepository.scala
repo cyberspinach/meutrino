@@ -143,7 +143,7 @@ class LocalRepository(commandServer: CommandServer) extends QRepository with Jav
 
   //TODO Date to be implemented
   def commit(message: String, user: Option[String], logfile: Option[String], addRemove: Boolean,
-    closebranch: Boolean, date: Date): (Int, QNodeId) = {
+    closebranch: Boolean, date: Option[Date]): (Int, QNodeId) = {
     val data = runCommand[String]("commit", List("--debug", "--message", message) ++
       option("user", user) ++ option("close-branch", closebranch) ++
       option("addremove", addRemove) ++
@@ -412,7 +412,7 @@ class LocalRepository(commandServer: CommandServer) extends QRepository with Jav
   //TODO date is to be implemented
   def tag(name: String, rev: Option[QNodeId] = None, message: Option[String] = None,
     force: Boolean = false, local: Boolean = false, remove: Boolean = false,
-    date: Date = new Date(), user: Option[String] = None) {
+    date: Option[Date] = None, user: Option[String] = None) {
     val data = runCommand[String]("tag", option("rev", rev) ++ option("message", message)
       ++ option("force", force) ++ option("local", local) ++ option("remove", remove) ++
       option("user", user) ++ List(name))(processOutput)

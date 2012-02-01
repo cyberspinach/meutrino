@@ -149,7 +149,7 @@ trait QRepository {
    * user - record the specified user as committer
    */
   def commit(message: String, user: Option[String] = None, logfile: Option[String] = None, addRemove: Boolean = false,
-    closeBranch: Boolean = false, date: Date = new Date()): (Int, QNodeId)
+    closeBranch: Boolean = false, date: Option[Date] = None): (Int, QNodeId)
 
   /**
    * Return List(config files), List(source, section, key, value) where
@@ -507,7 +507,7 @@ trait QRepository {
    */
   def tag(name: String, rev: Option[QNodeId] = None, message: Option[String] = None,
     force: Boolean = false, local: Boolean = false, remove: Boolean = false,
-    date: Date = new Date(), user: Option[String] = None): Unit
+    date: Option[Date] = None, user: Option[String] = None): Unit
 
   /**
    * Return a list of repository tags as: (name, rev, node, islocal)

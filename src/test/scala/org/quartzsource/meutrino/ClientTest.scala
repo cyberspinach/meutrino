@@ -36,7 +36,7 @@ class ClientTest extends AbstractTest {
       data.foreach(p.println)
     })
     repo.addRemove(Nil, 100)
-    val (_, revision) = repo.commit("Add file1.txt", Some("py4fun"), addRemove = false, date = new Date())
+    val (_, revision) = repo.commit("Add file1.txt", Some("py4fun"), addRemove = false, date = Some(new Date()))
     //println(revision.node)
     repo.close
     //clone
