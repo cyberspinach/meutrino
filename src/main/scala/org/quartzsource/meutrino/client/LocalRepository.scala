@@ -19,6 +19,7 @@ package org.quartzsource.meutrino.client
 import java.io.InputStream
 import java.io.File
 import java.util.Date
+import java.util.TimeZone
 import org.quartzsource.meutrino._
 
 class LocalRepository(commandServer: CommandServer) extends QRepository with JavaQRepository {
@@ -141,12 +142,12 @@ class LocalRepository(commandServer: CommandServer) extends QRepository with Jav
     //println(data)
   }
 
-  //TODO Date to be implemented
   def commit(message: String, user: Option[String], logfile: Option[String], addRemove: Boolean,
     closebranch: Boolean, date: Option[Date]): (Int, QNodeId) = {
     val data = runCommand[String]("commit", List("--debug", "--message", message) ++
       option("user", user) ++ option("close-branch", closebranch) ++
       option("addremove", addRemove) ++
+      dateOption(date) ++
       option("logfile", logfile))(processOutput)
     val lastLine = data.split("\n").last
     val tuple = parseTailRev(lastLine)
@@ -230,7 +231,6 @@ class LocalRepository(commandServer: CommandServer) extends QRepository with Jav
     parseRevs(data)
   }
 
-  //TODO date format to be implemented
   def import_(patch: InputStream, strip: Option[Int] = None, force: Boolean = false,
     noCommit: Boolean = false, bypass: Boolean = false, exact: Boolean = false,
     importBranch: Boolean = false, message: Option[String] = None, date: Option[Date] = None,
@@ -239,7 +239,7 @@ class LocalRepository(commandServer: CommandServer) extends QRepository with Jav
     val data = runCommand[String]("import", option("strip", strip) ++
       option("force", force) ++ option("no-commit", noCommit) ++ option("bypass", bypass) ++
       option("exact", exact) ++ option("import-branch", importBranch) ++
-      option("message", message) ++ option("date", date) ++
+      option("message", message) ++ dateOption(date) ++
       option("user", user) ++ option("similarity", similarity) ++
       List("-"), batchInput)(processOutput)
     batchInput.close
@@ -409,13 +409,12 @@ class LocalRepository(commandServer: CommandServer) extends QRepository with Jav
     }
   }
 
-  //TODO date is to be implemented
   def tag(name: String, rev: Option[QNodeId] = None, message: Option[String] = None,
     force: Boolean = false, local: Boolean = false, remove: Boolean = false,
     date: Option[Date] = None, user: Option[String] = None) {
     val data = runCommand[String]("tag", option("rev", rev) ++ option("message", message)
       ++ option("force", force) ++ option("local", local) ++ option("remove", remove) ++
-      option("user", user) ++ List(name))(processOutput)
+      option("user", user) ++ dateOption(date) ++ List(name))(processOutput)
   }
 
   def tags(): List[(String, Int, QNodeId, Boolean)] = {
@@ -434,12 +433,11 @@ class LocalRepository(commandServer: CommandServer) extends QRepository with Jav
     cset
   }
 
-  //TODO date is to be implemented
   def update(rev: Option[QNodeId] = None, clean: Boolean = false,
     check: Boolean = false, date: Option[Date] = None) = {
     if (clean && check) throw new IllegalArgumentException("clean and check cannot both be true")
     val data = runCommand[(Int, Int, Int, Int)]("update", option("clean", clean) ++ option("check", check) ++
-      option("date", date) ++ option("rev", rev)) {
+      dateOption(date) ++ option("rev", rev)) {
       (code, output, error) =>
         {
           processBoolean(code, output, error) //check 0 or 1 returned
@@ -520,6 +518,16 @@ class LocalRepository(commandServer: CommandServer) extends QRepository with Jav
 
   private def option[A](value: Option[A]): List[String] = {
     if (value.isDefined) List(value.get.toString) else Nil
+  }
+
+  private def dateOption(date: Option[Date]): List[String] = date match {
+    case None => Nil
+    case Some(d) => {
+      val zone: TimeZone = TimeZone.getDefault()
+      val offset = -zone.getOffset(d.getTime()) / 1000
+      val formatted = "%s %s".format(d.getTime() / 1000, offset)
+      List("--date", formatted)
+    }
   }
 
   /**

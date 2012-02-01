@@ -20,6 +20,7 @@ import org.junit.Assert._
 import org.junit.Test
 import org.quartzsource.meutrino.CommandException
 import org.quartzsource.meutrino.client.CommandServerFactory
+import java.util.Date
 
 class CommitTest extends AbstractHglibTest {
 
@@ -73,6 +74,17 @@ class CommitTest extends AbstractHglibTest {
   @Test(expected = classOf[CommandException])
   def testMessageLogfile2 {
     client.commit("foo")
+  }
+
+  @Test
+  def testDate {
+    append("a", "a")
+    val now = new Date()
+    val (_, node) = client.commit("first", Some("foo"), addRemove = true, date = Some(now))
+    val rev = client.log(revRange = List(node.node))(0)
+    //drop miliseconds
+    val millis = now.getTime() / 1000 * 1000
+    assertEquals(new Date(millis), rev.date)
   }
 }
 
