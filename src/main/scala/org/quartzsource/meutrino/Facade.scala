@@ -29,7 +29,6 @@ case class QVersion(@BeanProperty major: Int, @BeanProperty minor: Int, @BeanPro
   require(fix >= 0)
 
   override def toString(): String = "%s.%s.%s".format(major, minor, fix)
-  //  override lazy val toString: String = "%s.%s.%s".format(major, minor, fix)
 }
 
 /**
@@ -101,7 +100,6 @@ case class QRevision(data: List[String]) {
   lazy val toInt: Int = rev
 
   override def toString(): String = "<revision %s>".format(data.mkString(", "))
-  //  override lazy val toString: String = "<revision %s>".format(data.mkString(", "))
 }
 object QRevision {
   /**

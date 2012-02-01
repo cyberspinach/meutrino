@@ -124,7 +124,6 @@ class CommandServer(val path: File, process: Process, sync: Boolean = false) {
     (code, new String(resultOut, "UTF-8"), new String(resultErr, "UTF-8"))
   }
 
-  //TODO do not use synchronized methods
   def runCommand[A](args: List[String], userInput: UserInput)(f: (Int, String, String) => A): A = {
     val (code, out, err) = if (sync) {
       this.synchronized {
