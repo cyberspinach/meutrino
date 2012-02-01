@@ -1,0 +1,6 @@
+[patterns]
+**.scala = LF
+**.java  = LF
+**.txt   = LF
+**.xml   = LF
+**.conf  = LF

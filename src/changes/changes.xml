@@ -1,0 +1,16 @@
+<document xmlns="http://maven.apache.org/changes/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/plugins/maven-changes-plugin/xsd/changes-1.0.0.xsd">
+    <properties>
+        <title>Scala client for Mercurial CommandServer</title>
+        <author email="py4fun@gmail.com">Andrey Somov</author>
+    </properties>
+    <body>
+        <release version="0.1-SNAPSHOT" date="in Mercurial" description="Development">
+            <action dev="py4fun" type="add">
+                Create project (2012-02-01)
+             </action>
+        </release>
+    </body>
+</document>
+

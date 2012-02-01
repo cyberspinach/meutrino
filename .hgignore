@@ -1,0 +1,18 @@
+syntax: regexp
+^target$
+^.target$
+^.cache$
+/*/\.cache$
+/*/target$
+/*/bin$
+^bin$
+/*/\.settings$
+^\.settings$
+/*/\.project$
+^\.project$
+/*/\.classpath$
+^\.classpath$
+/*/\.manager$
+/*/\.scala_dependencies$
+^\.scala_dependencies$
+hotspot.log
