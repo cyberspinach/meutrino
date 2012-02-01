@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.quartzsource.meutrino.JavaQRepository;
+import org.quartzsource.meutrino.client.CommandServerConfig;
 import org.quartzsource.meutrino.client.CommandServerFactory;
 
 public class MyFactory {
@@ -32,8 +33,8 @@ public class MyFactory {
 		Map<String, String> uiMap = new HashMap<String, String>();
 		uiMap.put("username", "py4fun");
 		config.put("ui", uiMap);
-		this.worker = new CommandServerFactory("hg", null, config, false,
-				new HashMap<String, String>());
+		this.worker = new CommandServerFactory("hg", CommandServerConfig.apply(
+				null, config, false, new HashMap<String, String>(), false));
 		File root = new File(System.getProperty("java.io.tmpdir"));
 		tempFolder = new File(root, "javaexample_test");
 		tempFolder.mkdirs();

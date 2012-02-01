@@ -20,6 +20,7 @@ import org.junit.Assert._
 import org.junit.Test
 import org.quartzsource.meutrino.QFactory
 import org.quartzsource.meutrino.client.CommandServerFactory
+import org.quartzsource.meutrino.client.CommandServerConfig
 
 class ConfigTest extends AbstractHglibTest {
 
@@ -41,7 +42,7 @@ class ConfigTest extends AbstractHglibTest {
   def testGlobalPath {
     client.close()
     write(".hg/hgrc", "[section]\nkey=value\n")
-    val factory2: QFactory = new CommandServerFactory("hg", useGlobalHgrcPath = true)
+    val factory2: QFactory = new CommandServerFactory("hg", new CommandServerConfig(useGlobalHgrcPath = true))
     val reopen = factory2.open(rootFolder)
     val (files, config) = reopen.config()
     assertEquals(1, config.count(t => t match {
@@ -57,7 +58,7 @@ class ConfigTest extends AbstractHglibTest {
     client.close()
     write(".hg/hgrc", "[section]\nkey=value\n")
     val conf = Map(("ui" -> Map("username" -> "py4fun")))
-    val factory2: QFactory = new CommandServerFactory("hg", config = conf)
+    val factory2: QFactory = new CommandServerFactory("hg", new CommandServerConfig(config = conf))
     val reopen = factory2.open(rootFolder)
     val (files, config) = reopen.config()
     assertEquals(2, config.count(t => t match {

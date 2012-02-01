@@ -20,13 +20,15 @@ import java.io.BufferedWriter
 import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
+
 import org.junit.Assert._
 import org.junit.After
 import org.junit.Before
+import org.quartzsource.meutrino.client.CommandServerConfig
 import org.quartzsource.meutrino.client.CommandServerFactory
 import org.quartzsource.meutrino.AbstractTest
-import org.quartzsource.meutrino.QRepository
 import org.quartzsource.meutrino.QFactory
+import org.quartzsource.meutrino.QRepository
 
 //TODO move one package up
 abstract class AbstractHglibTest extends AbstractTest {
@@ -69,7 +71,7 @@ abstract class AbstractHglibTest extends AbstractTest {
 
 class RegisteredFactory extends QFactory {
   val conf = Map(("ui" -> Map("username" -> "py4fun")))
-  val factory = new CommandServerFactory("hg", config = conf)
+  val factory = new CommandServerFactory("hg", CommandServerConfig(config = conf))
   val repositry: scala.collection.mutable.Map[String, QRepository] = scala.collection.mutable.Map.empty
 
   def create(path: File): QRepository = factory.create(path)

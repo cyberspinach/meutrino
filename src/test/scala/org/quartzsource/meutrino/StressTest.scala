@@ -21,6 +21,7 @@ import org.junit.Test
 import org.junit.Assert._
 import org.quartzsource.meutrino.client.CommandServerFactory
 import org.quartzsource.meutrino.hglib.AbstractHglibTest
+import org.quartzsource.meutrino.client.CommandServerConfig
 
 @Test
 class StressTest extends AbstractHglibTest {
@@ -80,7 +81,7 @@ class StressTest extends AbstractHglibTest {
   def sameRepo(syncWithLock: Boolean): Boolean = {
     val rootFolder: File = getTestFolder()
     val conf = Map(("ui" -> Map("username" -> "py4fun")))
-    val factory = new CommandServerFactory("hg", config = conf, sync = syncWithLock)
+    val factory = new CommandServerFactory("hg", new CommandServerConfig(config = conf, sync = syncWithLock))
     val repo = factory.create(rootFolder)
 
     val writer = new WriterWorker(1, repo)

@@ -26,6 +26,7 @@ import org.quartzsource.meutrino.QNodeId;
 import org.quartzsource.meutrino.QPath;
 import org.quartzsource.meutrino.QRepository;
 import org.quartzsource.meutrino.QStatus;
+import org.quartzsource.meutrino.client.CommandServerConfig;
 import org.quartzsource.meutrino.client.CommandServerFactory;
 
 import scala.Option;
@@ -35,9 +36,10 @@ public class CommandServerFactoryTest {
 
 	@Test
 	public void testConverterListToJava() {
-		CommandServerFactory factory = new CommandServerFactory("hg", null,
-				new HashMap<String, java.util.Map<String, String>>(), false,
-				new HashMap<String, String>());
+		CommandServerFactory factory = new CommandServerFactory("hg",
+				CommandServerConfig.apply(null,
+						new HashMap<String, java.util.Map<String, String>>(),
+						false, new HashMap<String, String>(), false));
 		QRepository repo = factory.open(new File("."));
 		Option<QNodeId> none = Option.apply(null);
 		Object some = repo.status(none, false, false, false);

@@ -24,7 +24,6 @@ import scala.collection.JavaConverters._
 import org.quartzsource.meutrino._
 
 /**
- * hg - full path to Mercurial executable
  * environment - global environment variables
  * useGlobalHgrcPath - when this is false then only the local settings in .hg/hgrc from the current repository is read.
  *
@@ -32,26 +31,40 @@ import org.quartzsource.meutrino._
  * --remotecmd CMD     specify hg command to run on the remote side
  * --insecure          do not verify server certificate (ignoring web.cacerts config)
  */
-class CommandServerFactory(hg: String,
+case class CommandServerConfig(
   workingDir: Option[File] = None,
   config: Map[String, Map[String, String]] = Map.empty,
   useGlobalHgrcPath: Boolean = false,
   environment: Map[String, String] = Map.empty,
-  sync: Boolean = false) extends QFactory {
-  val charSet = Charset.forName("UTF-8")
-  def this(hg: String, workingDir: File, configMap: java.util.Map[String, java.util.Map[String, String]],
-    useGlobalHgrcPath: Boolean, envMap: java.util.Map[String, String]) =
-    this(hg,
-      Some(workingDir),
+  sync: Boolean = false) {
+
+}
+case object CommandServerConfig {
+  /**
+   * Use Java collections
+   */
+  def apply(workingDir: File, configMap: java.util.Map[String, java.util.Map[String, String]],
+    useGlobalHgrcPath: Boolean, envMap: java.util.Map[String, String], sync: Boolean): CommandServerConfig = {
+    new CommandServerConfig(Some(workingDir),
       configMap.asScala.map {
         case (key, submap) => (key -> submap.asScala.toMap)
       }.toMap,
       useGlobalHgrcPath,
-      envMap.asScala.toMap)
+      envMap.asScala.toMap,
+      sync)
+  }
+}
+
+/**
+ * hg - full path to Mercurial executable
+ * config - configuration
+ */
+class CommandServerFactory(hg: String, config: CommandServerConfig = new CommandServerConfig()) extends QFactory {
+  val charSet = Charset.forName("UTF-8")
 
   def create(path: File): QRepository = {
     val args: List[String] = List("init", path.getCanonicalPath())
-    val output = executeCommand(args, workingDir)
+    val output = executeCommand(args, config.workingDir)
     open(path)
   }
 
@@ -60,13 +73,13 @@ class CommandServerFactory(hg: String,
       throw new IllegalStateException("No .hg repository found in " + path.getCanonicalPath())
     }
     val process = launch(List("serve", "--cmdserver", "pipe", "--config", "ui.interactive=True") ++
-      configToArguments(config), Some(path))
+      configToArguments(config.config), Some(path))
     getVersion() match {
       case v @ QVersion(1, minor, _) if minor < 9 =>
         throw new CommandServerException("CommandServer is not supported before 1.9: " + v)
       case _ => //Ok
     }
-    val serverProcess = new CommandServer(path, process, sync)
+    val serverProcess = new CommandServer(path, process, config.sync)
     new LocalRepository(serverProcess)
   }
 
@@ -74,7 +87,7 @@ class CommandServerFactory(hg: String,
     uncompressed: Boolean): QRepository = {
     val args: List[String] = List("clone", "--pull") ++ (if (noupdate) List("--noupdate") else Nil) ++
       (if (uncompressed) List("--uncompressed") else Nil) ++ List(source, path.getCanonicalPath())
-    val output = executeCommand(args, workingDir)
+    val output = executeCommand(args, config.workingDir)
     open(path)
   }
 
@@ -92,11 +105,11 @@ class CommandServerFactory(hg: String,
     //This overrides the default locale setting detected by Mercurial,
     //UTF-8 is always used
     env.put("HGENCODING", charSet.displayName)
-    if (!useGlobalHgrcPath) {
+    if (!config.useGlobalHgrcPath) {
       //only the .hg/hgrc from the current repository is read.
       env.put("HGRCPATH", "")
     }
-    environment.foreach { case (key, value) => env.put(key, value) }
+    config.environment.foreach { case (key, value) => env.put(key, value) }
     processBuilder.start()
   }
 
@@ -128,7 +141,7 @@ class CommandServerFactory(hg: String,
   }
 
   def getVersion(): QVersion = {
-    val (output, _) = executeCommand(List("version", "--quiet"), workingDir)
+    val (output, _) = executeCommand(List("version", "--quiet"), config.workingDir)
     CommandServerFactory.parseVersion(output)
   }
 }
