@@ -43,6 +43,10 @@ class ChangeContextTest extends AbstractClientTest {
     assertEquals(List(), cxt.bookmarks)
     assertEquals(List(), cxt.children)
     assertEquals(cxt, cxt.ancestor(node))
+    assertEquals(node.node, cxt.hex)
+    assertEquals(cxt.manifest, cxt.toMap)
+    assertEquals(Map(), cxt.status(true, true))
+    assertTrue(cxt.toBoolean)
   }
 
   @Test
