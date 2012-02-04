@@ -17,7 +17,7 @@ object BuildSettings {
         fork in test := true,
         libraryDependencies ++= Seq(scalatest, junit),
         resolvers := Seq(scalaToolsRepo, jbossRepo,
-                         akkaRepo, sonatypeRepo))
+                         sonatypeRepo))
 
     val projectSettings = Defaults.defaultSettings ++ globalSettings
 }
@@ -26,7 +26,6 @@ object Resolvers {
     val sonatypeRepo = "Sonatype Release" at "http://oss.sonatype.org/content/repositories/releases"
     val scalaToolsRepo = "Scala Tools" at "http://scala-tools.org/repo-snapshots/"
     val jbossRepo = "JBoss" at "http://repository.jboss.org/nexus/content/groups/public/"
-    val akkaRepo = "Akka" at "http://akka.io/repository/"
 }
 
 object Dependencies {
@@ -34,9 +33,7 @@ object Dependencies {
     val junit = "junit" % "junit" % "4.7" % "test"
     
     val junitInterface = "com.novocode" % "junit-interface" % "0.6" % "test"
-
-    val akka = "se.scalablesolutions.akka" % "akka-actor" % "1.2"
-    val akkaHttp = "se.scalablesolutions.akka" % "akka-http" % "1.2"
+    val commonsIo = "commons-io" % "commons-io" % "2.1" % "test"
 
 }
 
@@ -50,5 +47,5 @@ object MeutrinoBuild extends Build {
     lazy val root = Project("meutrino",
                            file("."),
                            settings = projectSettings ++
-                           Seq(libraryDependencies ++= Seq(akka, junitInterface)))
+                           Seq(libraryDependencies ++= Seq(junitInterface, commonsIo)))
 }
