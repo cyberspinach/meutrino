@@ -64,7 +64,6 @@ final class ChangeContext(repo: QRepository, cset: QRevision) extends QChangeCon
   lazy val added = status().getOrElse(ADDED, Nil)
   lazy val removed = status().getOrElse(REMOVED, Nil)
 
-  //TODO should be cached or lazy
   def ignored = status(ignored = true).getOrElse(IGNORED, Nil)
   def clean = status(clean = true).getOrElse(CLEAN, Nil)
 

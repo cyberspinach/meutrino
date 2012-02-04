@@ -265,8 +265,23 @@ class LocalRepository(commandServer: CommandServer) extends QRepository with Jav
     data
   }
 
-  def log(files: List[QPath], revRange: List[String]): List[QRevision] = {
-    val data = runCommand[String]("log", option("rev", revRange) ++ List("--template", TEMPLATE) ++
+  def log(files: List[QPath], revRange: List[String], follow: Boolean,
+    date: Option[Date], copies: Boolean, keyword: List[String],
+    removed: Boolean, user: List[String],
+    branch: List[String], prune: List[QNodeId],
+    limit: Option[Int], noMerges: Boolean): List[QRevision] = {
+    val data = runCommand[String]("log", option("rev", revRange) ++
+      List("--template", TEMPLATE) ++
+      option("follow", follow) ++
+      dateOption(date) ++
+      option("copies", copies) ++
+      option("keyword", keyword) ++
+      option("removed", removed) ++
+      option("user", user) ++
+      option("branch", branch) ++
+      option("prune", prune.map(_.node)) ++
+      option("limit", limit) ++
+      option("no-merges", noMerges) ++
       files.map(_.path))(processOutput)
     parseRevs(data)
   }

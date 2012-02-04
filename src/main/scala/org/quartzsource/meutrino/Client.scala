@@ -284,29 +284,23 @@ trait QRepository {
    * in which case the working directory parent is used as the starting
    * revision.
    *
-   * The returned changeset is a named tuple with the following string fields:
-   * - rev
-   * - node
-   * - tags (space delimited)
-   * - branch
-   * - author
-   * - desc
-   *
    * follow - follow changeset history, or file history across copies and renames
-   * followfirst - only follow the first parent of merge changesets
    * date - show revisions matching date spec
    * copies - show copied files
    * keyword - do case-insensitive search for a given text
    * removed - include revisions where files were removed
-   * onlymerges - show only merges
    * user - revisions committed by user
    * branch - show changesets within the given named branch
    * prune - do not display revision or any of its ancestors
-   * hidden - show hidden changesets
    * limit - limit number of changes displayed
    * nomerges - do not show merges
    */
-  def log(files: List[QPath] = Nil, revRange: List[String] = Nil): List[QRevision] //TODO add all the arguments to log()
+  def log(files: List[QPath] = Nil, revRange: List[String] = Nil, follow: Boolean = false,
+    date: Option[Date] = None, copies: Boolean = false,
+    keyword: List[String] = Nil,
+    removed: Boolean = false, user: List[String] = Nil,
+    branch: List[String] = Nil, prune: List[QNodeId] = Nil,
+    limit: Option[Int] = None, noMerges: Boolean = false): List[QRevision]
 
   /**
    * Yields (nodeid, permission, executable, symlink, file path) tuples for
