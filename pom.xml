@@ -13,6 +13,10 @@
     <description>JVM client for Mercurial 1.9+</description>
     <inceptionYear>2012</inceptionYear>
     <url>http://www.quartzsource.org</url>
+    <scm>
+        <connection>scm:hg:http://code.google.com/p/meutrino/</connection>
+        <url>http://http://code.google.com/p/meutrino/source/browse/</url>
+    </scm>
     <licenses>
         <license>
             <name>Apache License Version 2.0</name>
