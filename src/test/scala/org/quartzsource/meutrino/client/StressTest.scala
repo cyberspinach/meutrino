@@ -20,11 +20,11 @@ import java.io.File
 import org.junit.Test
 import org.junit.Assert._
 import org.quartzsource.meutrino.client.CommandServerFactory
-import org.quartzsource.meutrino.hglib.AbstractHglibTest
+import org.quartzsource.meutrino.client.AbstractClientTest
 import org.quartzsource.meutrino.client.CommandServerConfig
 
 @Test
-class StressTest extends AbstractHglibTest {
+class StressTest extends AbstractClientTest {
 
   @Test
   def testDifferentRepositories {

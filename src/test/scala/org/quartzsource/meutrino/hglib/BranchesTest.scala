@@ -19,8 +19,9 @@ package org.quartzsource.meutrino.hglib
 import org.junit.Assert._
 import org.junit.Test
 import org.quartzsource.meutrino.QBranch
+import org.quartzsource.meutrino.client.AbstractClientTest
 
-class BranchesTest extends AbstractHglibTest {
+class BranchesTest extends AbstractClientTest {
   @Test
   def testEmpty {
     assertEquals(Nil, client.branches())

@@ -21,8 +21,9 @@ import org.junit.Test
 import org.quartzsource.meutrino.QFactory
 import org.quartzsource.meutrino.client.CommandServerFactory
 import org.quartzsource.meutrino.client.CommandServerConfig
+import org.quartzsource.meutrino.client.AbstractClientTest
 
-class ConfigTest extends AbstractHglibTest {
+class ConfigTest extends AbstractClientTest {
 
   @Test
   def testBasic {

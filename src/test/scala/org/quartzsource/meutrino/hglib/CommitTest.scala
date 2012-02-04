@@ -21,8 +21,9 @@ import org.junit.Test
 import org.quartzsource.meutrino.CommandException
 import org.quartzsource.meutrino.client.CommandServerFactory
 import java.util.Date
+import org.quartzsource.meutrino.client.AbstractClientTest
 
-class CommitTest extends AbstractHglibTest {
+class CommitTest extends AbstractClientTest {
 
   @Test
   def testUser {

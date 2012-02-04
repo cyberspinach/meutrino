@@ -19,8 +19,9 @@ package org.quartzsource.meutrino.hglib
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import org.quartzsource.meutrino.client.AbstractClientTest
 
-class BundleTest extends AbstractHglibTest {
+class BundleTest extends AbstractClientTest {
   @Test
   def testNoChanges {
     append("a", "a")

@@ -20,8 +20,9 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Test
 import java.io.File
+import org.quartzsource.meutrino.client.AbstractClientTest
 
-class CloneTest extends AbstractHglibTest {
+class CloneTest extends AbstractClientTest {
 
   @Test
   def testBasic {

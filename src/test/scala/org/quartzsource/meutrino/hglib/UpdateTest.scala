@@ -20,8 +20,9 @@ import org.junit.Assert._
 import org.junit.Test
 import org.quartzsource.meutrino.MODIFIED
 import org.quartzsource.meutrino.QPath
+import org.quartzsource.meutrino.client.AbstractClientTest
 
-class UpdateTest extends AbstractHglibTest {
+class UpdateTest extends AbstractClientTest {
   append("a", "a")
   val (rev0, node0) = client.commit("first", addRemove = true)
   append("a", "a")

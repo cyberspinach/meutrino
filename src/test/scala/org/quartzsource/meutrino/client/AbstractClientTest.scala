@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.quartzsource.meutrino.hglib
+package org.quartzsource.meutrino.client
 
 import java.io.BufferedWriter
 import java.io.File
@@ -24,14 +24,11 @@ import java.io.FileWriter
 import org.junit.Assert._
 import org.junit.After
 import org.junit.Before
-import org.quartzsource.meutrino.client.CommandServerConfig
-import org.quartzsource.meutrino.client.CommandServerFactory
 import org.quartzsource.meutrino.AbstractTest
 import org.quartzsource.meutrino.QFactory
 import org.quartzsource.meutrino.QRepository
 
-//TODO move one package up
-abstract class AbstractHglibTest extends AbstractTest {
+abstract class AbstractClientTest extends AbstractTest {
   val rootFolder: File = getTestFolder()
   val factory = new RegisteredFactory()
   val client = factory.create(rootFolder)

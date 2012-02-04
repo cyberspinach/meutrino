@@ -22,8 +22,9 @@ import org.junit.Test
 import org.apache.commons.io.FileUtils
 import org.quartzsource.meutrino.CommandException
 import java.io.File
+import org.quartzsource.meutrino.client.AbstractClientTest
 
-class InitTest extends AbstractHglibTest {
+class InitTest extends AbstractClientTest {
 
   @Test(expected = classOf[CommandException])
   def testExists {

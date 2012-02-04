@@ -20,9 +20,8 @@ import org.junit.Assert._
 import org.junit.Test
 import org.quartzsource.meutrino.CommandException
 import java.util.Date
-import org.quartzsource.meutrino.hglib.AbstractHglibTest
 
-class DateTest extends AbstractHglibTest {
+class DateTest extends AbstractClientTest {
 
   @Test
   def testDate {

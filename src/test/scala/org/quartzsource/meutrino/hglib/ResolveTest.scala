@@ -21,8 +21,9 @@ import org.junit.Test
 import org.quartzsource.meutrino.REMOVED
 import org.quartzsource.meutrino.UNRESOLVED
 import org.quartzsource.meutrino.QPath
+import org.quartzsource.meutrino.client.AbstractClientTest
 
-class ResolveTest extends AbstractHglibTest {
+class ResolveTest extends AbstractClientTest {
   append("a", "a")
   append("b", "b")
   val (_, node0) = client.commit("first", addRemove = true)

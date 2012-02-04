@@ -21,8 +21,9 @@ import org.junit.Test
 import org.quartzsource.meutrino.CommandServerException
 import org.quartzsource.meutrino.QInteractiveMerge
 import org.quartzsource.meutrino.QPath
+import org.quartzsource.meutrino.client.AbstractClientTest
 
-class MergeTest extends AbstractHglibTest {
+class MergeTest extends AbstractClientTest {
   append("a", "a")
   val (rev0, node0) = client.commit("first", addRemove = true)
   append("a", "a")

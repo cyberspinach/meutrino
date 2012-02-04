@@ -28,8 +28,9 @@ import org.quartzsource.meutrino.MISSING
 import org.quartzsource.meutrino.CLEAN
 import java.io.File
 import org.quartzsource.meutrino.UNKNOWN
+import org.quartzsource.meutrino.client.AbstractClientTest
 
-class StatusTest extends AbstractHglibTest {
+class StatusTest extends AbstractClientTest {
 
   @Test
   def testEmpty {

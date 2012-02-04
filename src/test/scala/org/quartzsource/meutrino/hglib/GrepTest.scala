@@ -17,8 +17,9 @@
 package org.quartzsource.meutrino.hglib
 
 import org.junit.Test
+import org.quartzsource.meutrino.client.AbstractClientTest
 
-class GrepTest extends AbstractHglibTest {
+class GrepTest extends AbstractClientTest {
 
   @Test(expected = classOf[UnsupportedOperationException])
   def testNotImplemented {

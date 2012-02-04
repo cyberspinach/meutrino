@@ -19,8 +19,9 @@ package org.quartzsource.meutrino.hglib
 import org.junit.Assert._
 import org.junit.Test
 import org.quartzsource.meutrino.QPath
+import org.quartzsource.meutrino.client.AbstractClientTest
 
-class DiffTest extends AbstractHglibTest {
+class DiffTest extends AbstractClientTest {
 
   @Test
   def testBasic {

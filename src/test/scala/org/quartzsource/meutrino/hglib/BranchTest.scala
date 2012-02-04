@@ -20,8 +20,9 @@ import org.junit.Assert._
 import org.junit.Test
 import org.quartzsource.meutrino.CommandException
 import org.quartzsource.meutrino.QBranch
+import org.quartzsource.meutrino.client.AbstractClientTest
 
-class BranchTest extends AbstractHglibTest {
+class BranchTest extends AbstractClientTest {
   @Test
   def testEmpty {
     assertEquals(QBranch("default", true, false), client.branch())

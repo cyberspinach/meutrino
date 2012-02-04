@@ -21,8 +21,9 @@ import org.junit.Test
 import org.quartzsource.meutrino.CommandException
 import org.quartzsource.meutrino.QPath
 import java.io.File
+import org.quartzsource.meutrino.client.AbstractClientTest
 
-class MoveTest extends AbstractHglibTest {
+class MoveTest extends AbstractClientTest {
 
   @Test
   def testBasic {

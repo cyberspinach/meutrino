@@ -20,8 +20,9 @@ import org.junit.Assert._
 import org.junit.Test
 import org.quartzsource.meutrino.CommandException
 import java.io.File
+import org.quartzsource.meutrino.client.AbstractClientTest
 
-class OutgoingIncomingTest extends AbstractHglibTest {
+class OutgoingIncomingTest extends AbstractClientTest {
 
   @Test(expected = classOf[CommandException])
   def testNoPath {

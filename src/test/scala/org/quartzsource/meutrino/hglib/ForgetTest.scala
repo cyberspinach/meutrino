@@ -23,8 +23,9 @@ import org.junit.Test
 import org.quartzsource.meutrino.QPath
 import org.quartzsource.meutrino.ADDED
 import org.quartzsource.meutrino.UNKNOWN
+import org.quartzsource.meutrino.client.AbstractClientTest
 
-class ForgetTest extends AbstractHglibTest {
+class ForgetTest extends AbstractClientTest {
 
   @Test
   def testBasic {

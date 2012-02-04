@@ -21,8 +21,9 @@ import java.io.ByteArrayInputStream
 import org.junit.Assert._
 import org.junit.Test
 import org.quartzsource.meutrino.QPath
+import org.quartzsource.meutrino.client.AbstractClientTest
 
-class ImportTest extends AbstractHglibTest {
+class ImportTest extends AbstractClientTest {
 
   val patch = """
 # HG changeset patch

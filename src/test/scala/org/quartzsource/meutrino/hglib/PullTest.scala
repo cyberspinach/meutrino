@@ -21,8 +21,9 @@ import org.junit.Test
 import java.io.File
 import org.quartzsource.meutrino.MODIFIED
 import org.quartzsource.meutrino.QPath
+import org.quartzsource.meutrino.client.AbstractClientTest
 
-class PullTest extends AbstractHglibTest {
+class PullTest extends AbstractClientTest {
 
   @Test
   def testBasic {

@@ -18,8 +18,9 @@ package org.quartzsource.meutrino.hglib
 
 import org.junit.Test
 import org.quartzsource.meutrino.client.CommandServerFactory
+import org.quartzsource.meutrino.client.AbstractClientTest
 
-class HglibTest extends AbstractHglibTest {
+class HglibTest extends AbstractClientTest {
 
   @Test
   def testCloseFds {

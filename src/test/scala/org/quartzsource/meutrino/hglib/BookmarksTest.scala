@@ -20,8 +20,9 @@ import org.junit.Assert._
 import org.junit.Test
 import org.quartzsource.meutrino.QBookmark
 import org.quartzsource.meutrino.CommandException
+import org.quartzsource.meutrino.client.AbstractClientTest
 
-class BookmarksTest extends AbstractHglibTest {
+class BookmarksTest extends AbstractClientTest {
   @Test
   def testEmpty {
     assertEquals((List()), client.bookmarks())

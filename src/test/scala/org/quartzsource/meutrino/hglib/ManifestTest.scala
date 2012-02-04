@@ -20,8 +20,9 @@ import org.junit.Assert._
 import org.junit.Test
 import org.quartzsource.meutrino.QNodeId
 import org.quartzsource.meutrino.QPath
+import org.quartzsource.meutrino.client.AbstractClientTest
 
-class ManifestTest extends AbstractHglibTest {
+class ManifestTest extends AbstractClientTest {
 
   @Test
   def testBasic {

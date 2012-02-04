@@ -18,8 +18,9 @@ package org.quartzsource.meutrino.hglib
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import org.quartzsource.meutrino.client.AbstractClientTest
 
-class HeadsTest extends AbstractHglibTest {
+class HeadsTest extends AbstractClientTest {
 
   @Test
   def testEmpty {

@@ -20,8 +20,9 @@ import org.junit.Assert._
 import org.junit.Test
 import org.quartzsource.meutrino.ADDED
 import org.quartzsource.meutrino.QPath
+import org.quartzsource.meutrino.client.AbstractClientTest
 
-class CopyTest extends AbstractHglibTest {
+class CopyTest extends AbstractClientTest {
 
   @Test
   def testBasic {

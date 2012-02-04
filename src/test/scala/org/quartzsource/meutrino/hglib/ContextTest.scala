@@ -21,8 +21,9 @@ import org.junit.Test
 import org.quartzsource.meutrino.QPath
 import org.quartzsource.meutrino.QNodeId
 import org.quartzsource.meutrino.client.ChangeContext
+import org.quartzsource.meutrino.client.AbstractClientTest
 
-class ContextTest extends AbstractHglibTest {
+class ContextTest extends AbstractClientTest {
 
   @Test
   def testBasic {
