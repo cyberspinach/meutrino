@@ -205,7 +205,7 @@
                 <configuration>
                     <check>
                         <totalBranchRate>50</totalBranchRate>
-                        <totalLineRate>50</totalLineRate>
+                        <totalLineRate>80</totalLineRate>
                     </check>
                     <formats>
                         <format>html</format>

@@ -101,6 +101,11 @@ class FacadeTest extends AbstractTest {
     QNodeId("1234567890")
   }
 
+  @Test(expected = classOf[IllegalArgumentException])
+  def testQNodeIdEmpty {
+    QNodeId("")
+  }
+
   @Test
   def testQPath {
     val path = QPath("a")
