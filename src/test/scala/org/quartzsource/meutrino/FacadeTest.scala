@@ -25,17 +25,17 @@ import org.junit.Test
 class FacadeTest extends AbstractTest {
 
   @Test(expected = classOf[IllegalArgumentException])
-  def testQRevisionWrong1 {
+  def testQRevisionTooShort {
     QRevision(List("1", "2", "3"))
   }
 
   @Test(expected = classOf[IllegalArgumentException])
-  def testQRevisionLazyNil {
+  def testQRevisionEmpty {
     QRevision(Nil)
   }
 
   @Test(expected = classOf[IllegalArgumentException])
-  def testQRevisionWrong2 {
+  def testQRevisionNull {
     QRevision(null)
   }
 
@@ -51,5 +51,99 @@ class FacadeTest extends AbstractTest {
     assertEquals("1326905676.0-3600", rev.mdate)
     val milis: Long = 1326905676L * 1000L
     assertEquals(rev.mdate, new Date(milis), rev.date)
+  }
+
+  @Test
+  def testQBookmark {
+    val bookmark = QBookmark("name1", true)
+    assertEquals("name1", bookmark.name)
+    assertEquals("name1", bookmark.getName)
+    assertTrue(bookmark.active)
+    assertTrue(bookmark.getActive)
+    assertEquals("name1", bookmark.toString())
+  }
+
+  @Test(expected = classOf[IllegalArgumentException])
+  def testQBookmarkNull {
+    QBookmark(null, true)
+  }
+
+  @Test
+  def testQBranch {
+    val branch = QBranch("name1", true)
+    assertEquals("name1", branch.name)
+    assertEquals("name1", branch.getName)
+    assertTrue(branch.active)
+    assertTrue(branch.getActive)
+    assertEquals("name1", branch.toString())
+  }
+
+  @Test(expected = classOf[IllegalArgumentException])
+  def testQBranchNull {
+    QBranch(null, true)
+  }
+
+  @Test
+  def testQNodeId {
+    val id = "1" * 40
+    val node = QNodeId(id)
+    assertEquals(id, node.node)
+    assertEquals(id, node.getNode())
+  }
+
+  @Test(expected = classOf[IllegalArgumentException])
+  def testQNodeIdNull {
+    QNodeId(null)
+  }
+
+  @Test(expected = classOf[IllegalArgumentException])
+  def testQNodeIdInvalid {
+    QNodeId("1234567890")
+  }
+
+  @Test
+  def testQPath {
+    val path = QPath("a")
+    assertEquals("a", path.path)
+    assertEquals("a", path.getPath())
+  }
+
+  @Test(expected = classOf[IllegalArgumentException])
+  def testQPathNull {
+    QPath(null)
+  }
+
+  @Test(expected = classOf[IllegalArgumentException])
+  def testQPathEmpty {
+    QPath("")
+  }
+
+  @Test(expected = classOf[IllegalArgumentException])
+  def testQPathRoot {
+    QPath(java.io.File.separatorChar + "a")
+  }
+
+  @Test
+  def testQVersion {
+    val version = QVersion(1, 9, 2)
+    assertEquals(1, version.major)
+    assertEquals(9, version.minor)
+    assertEquals(2, version.fix)
+    assertEquals("1.9.2", version.toString())
+  }
+
+  @Test(expected = classOf[IllegalArgumentException])
+  def testQVersionOld {
+    QVersion(0, 9, 1)
+  }
+
+  @Test(expected = classOf[IllegalArgumentException])
+  def testQVersionPositiveMinor {
+    QVersion(2, -2, 1)
+  }
+
+  @Test(expected = classOf[IllegalArgumentException])
+  def testQVersionPositiveFix {
+    QVersion(2, 1, -1)
   }
 }
