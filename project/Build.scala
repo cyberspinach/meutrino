@@ -16,15 +16,13 @@ object BuildSettings {
         scalacOptions += "-deprecation",
         fork in test := true,
         libraryDependencies ++= Seq(scalatest, junit),
-        resolvers := Seq(scalaToolsRepo, jbossRepo,
-                         sonatypeRepo))
+        resolvers := Seq(jbossRepo, sonatypeRepo))
 
     val projectSettings = Defaults.defaultSettings ++ globalSettings
 }
 
 object Resolvers {
     val sonatypeRepo = "Sonatype Release" at "http://oss.sonatype.org/content/repositories/releases"
-    val scalaToolsRepo = "Scala Tools" at "http://scala-tools.org/repo-snapshots/"
     val jbossRepo = "JBoss" at "http://repository.jboss.org/nexus/content/groups/public/"
 }
 

@@ -45,34 +45,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <repositories>
-        <repository>
-            <id>scala-tools.org</id>
-            <name>Scala-Tools Maven2 Repository</name>
-            <url>http://scala-tools.org/repo-releases</url>
-        </repository>
-        <repository>
-            <id>scala-tools.org-s</id>
-            <name>Scala-Tools Maven2 Snapshots</name>
-            <url>http://scala-tools.org/repo-snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>daily</updatePolicy>
-            </snapshots>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>scala-tools.org</id>
-            <name>Scala-Tools Maven2 Repository</name>
-            <url>http://scala-tools.org/repo-releases</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>scala-tools.org-s</id>
-            <name>Scala-Tools Maven2 Repository</name>
-            <url>http://scala-tools.org/repo-snapshots</url>
-        </pluginRepository>
-    </pluginRepositories>
     <build>
         <plugins>
             <!-- Adds src/main/scala and src/test/scala as source folders, 
