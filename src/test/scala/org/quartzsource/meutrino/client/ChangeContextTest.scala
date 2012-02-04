@@ -42,5 +42,21 @@ class ChangeContextTest extends AbstractClientTest {
     assertEquals(List(), cxt.bookmarks)
     assertEquals(List(), cxt.children)
   }
+
+  @Test
+  def testEquals {
+    append("a", "a")
+    val (_, node) = client.commit("first", Some("foo"), addRemove = true)
+    append("a", "b")
+    val (_, node1) = client.commit("second", Some("foo"))
+    val cxt0 = client(node)
+    val cxt1 = client(node1)
+    assertFalse(cxt0.hashCode() == cxt1.hashCode())
+    assertFalse(cxt0 == cxt1)
+    val set = Set(cxt0, cxt1, cxt0, cxt1)
+    assertEquals(2, set.size)
+    assertTrue(set.contains(cxt0))
+    assertTrue(set.contains(cxt1))
+  }
 }
 
