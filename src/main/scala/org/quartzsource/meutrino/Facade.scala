@@ -105,7 +105,7 @@ object QRevision {
   /**
    * Create null revision
    */
-  def apply(): QRevision = new QRevision(List("-1", "000000000000000000000000000000000000000", "", "", "", "", "0.0"))
+  def apply(): QRevision = new QRevision(List("-1", "0000000000000000000000000000000000000000", "", "", "", "", "0.0"))
 }
 
 /**
@@ -120,7 +120,7 @@ trait QChangeContext {
   def branch: String
   def author: String
   def description: String
-  def date: String
+  def date: Date
   def toInt: Int = rev
   def toBoolean: Boolean = rev != -1
   def toList: List[QPath] = manifest.map(_._1).toList

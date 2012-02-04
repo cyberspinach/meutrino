@@ -28,6 +28,7 @@ import org.quartzsource.meutrino.MODIFIED
 import org.quartzsource.meutrino.CLEAN
 import scala.collection.immutable.TreeMap
 import scala.collection.immutable.SortedMap
+import java.util.Date
 
 final class ChangeContext(repo: QRepository, cset: QRevision) extends QChangeContext {
   lazy val rev = cset.rev
@@ -36,7 +37,7 @@ final class ChangeContext(repo: QRepository, cset: QRevision) extends QChangeCon
   lazy val branch: String = cset.branch
   lazy val author: String = cset.author
   lazy val description: String = cset.desc
-  lazy val date: String = throw new UnsupportedOperationException()
+  lazy val date: Date = cset.date
 
   def this(repo: QRepository, revset: String) = {
     this(repo, repo.log(revRange = List(revset)).head)
