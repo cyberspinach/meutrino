@@ -21,6 +21,8 @@ import org.junit.Test
 import org.quartzsource.meutrino.CommandException
 import java.util.Date
 import org.quartzsource.meutrino.QNodeId
+import org.quartzsource.meutrino.QRevision
+import org.quartzsource.meutrino.QuartzException
 
 class ChangeContextTest extends AbstractClientTest {
 
@@ -47,6 +49,14 @@ class ChangeContextTest extends AbstractClientTest {
     assertEquals(cxt.manifest, cxt.toMap)
     assertEquals(Map(), cxt.status(true, true))
     assertTrue(cxt.toBoolean)
+  }
+
+  @Test
+  def testInitProperties {
+    val revision = client.tip()
+    assertEquals(-1, revision.toInt)
+    val etalon = QRevision(List("-1", "0000000000000000000000000000000000000000", "tip", "default", "", "", "00"))
+    assertEquals(etalon, revision)
   }
 
   @Test
@@ -88,6 +98,19 @@ class ChangeContextTest extends AbstractClientTest {
     assertEquals(List(cxt.p1, cxt.p2), cxt.parents)
     assertEquals(List(client(node)), client(node1).children)
     assertEquals(cxt, cxt.ancestor(node))
+  }
+
+  @Test
+  def testNotValidRevision {
+    append("a", "a")
+    val now = new Date()
+    val (_, node) = client.commit("first", Some("foo"), addRemove = true, date = Some(now))
+    try {
+      val cxt = client(25)
+      fail()
+    } catch {
+      case e: QuartzException => assertEquals("abort: unknown revision '25'!\n", e.getMessage())
+    }
   }
 }
 

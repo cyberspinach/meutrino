@@ -535,6 +535,7 @@ trait QRepository {
   def version(): QVersion
 
   def apply(node: QNodeId): QChangeContext
+  def apply(rev: Int): QChangeContext
 
   def close()
 }

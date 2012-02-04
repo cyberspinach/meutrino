@@ -493,10 +493,14 @@ class LocalRepository(commandServer: CommandServer) extends QRepository with Jav
     case unknown => throw new IllegalArgumentException("Unexpected status char: #" + unknown)
   }
 
-  def apply(node: QNodeId): QChangeContext = {
-    val cset :: Nil = log(revRange = List(node.node))
+  private def apply(revRange: String): QChangeContext = {
+    val cset :: Nil = log(revRange = List(revRange))
     new ChangeContext(this, cset)
   }
+
+  def apply(node: QNodeId): QChangeContext = apply(node.node)
+
+  def apply(rev: Int): QChangeContext = apply(rev.toString())
 
   def close() = {
     commandServer.stop
