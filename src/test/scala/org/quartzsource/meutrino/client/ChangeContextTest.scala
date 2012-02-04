@@ -20,6 +20,7 @@ import org.junit.Assert._
 import org.junit.Test
 import org.quartzsource.meutrino.CommandException
 import java.util.Date
+import org.quartzsource.meutrino.QNodeId
 
 class ChangeContextTest extends AbstractClientTest {
 
@@ -41,6 +42,7 @@ class ChangeContextTest extends AbstractClientTest {
     assertEquals(List(cxt.p1), cxt.parents)
     assertEquals(List(), cxt.bookmarks)
     assertEquals(List(), cxt.children)
+    assertEquals(cxt, cxt.ancestor(node))
   }
 
   @Test
@@ -53,10 +55,35 @@ class ChangeContextTest extends AbstractClientTest {
     val cxt1 = client(node1)
     assertFalse(cxt0.hashCode() == cxt1.hashCode())
     assertFalse(cxt0 == cxt1)
+    assertFalse(cxt0 == cxt0.node)
+    assertEquals(cxt0, client(node))
     val set = Set(cxt0, cxt1, cxt0, cxt1)
     assertEquals(2, set.size)
     assertTrue(set.contains(cxt0))
     assertTrue(set.contains(cxt1))
+  }
+
+  @Test
+  def testMerged {
+    append("a", "a")
+    val (rev0, node0) = client.commit("first", addRemove = true)
+    append("a", "a")
+    val (rev1, node1) = client.commit("change")
+    client.update(Some(node0))
+    append("b", "a")
+    val (rev2, node2) = client.commit("new file", addRemove = true)
+    assertTrue(client.merge(Some(node1)))
+    val parent1 :: parent2 :: Nil = client.parents()
+    val (rev, node) = client.commit("merged", addRemove = true)
+    val cxt = client(node)
+    assertEquals(2, cxt.parents.size)
+    assertEquals(parent1.node, cxt.p1.node)
+    assertEquals(parent2.node, cxt.p2.node)
+    assertEquals(client(node2), cxt.p1)
+    assertEquals(client(node1), cxt.p2)
+    assertEquals(List(cxt.p1, cxt.p2), cxt.parents)
+    assertEquals(List(client(node)), client(node1).children)
+    assertEquals(cxt, cxt.ancestor(node))
   }
 }
 
