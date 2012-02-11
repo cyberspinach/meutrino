@@ -27,7 +27,7 @@ object Resolvers {
 }
 
 object Dependencies {
-    val scalatest = "org.scalatest" %% "scalatest" % "1.6.1" % "test"
+    val scalatest = "org.scalatest" %% "scalatest" % "1.7.1" % "test"
     val junit = "junit" % "junit" % "4.7" % "test"
     
     val junitInterface = "com.novocode" % "junit-interface" % "0.6" % "test"
