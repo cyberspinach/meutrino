@@ -106,5 +106,11 @@ class UpdateTest extends AbstractClientTest {
     assertEquals(0, ur)
     assertEquals(old, read("a"))
   }
+
+  @Test
+  def testBasicPlain {
+    write(".hg/hgrc", "[defaults]\nupdate=-v\n")
+    testBasic
+  }
 }
 

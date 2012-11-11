@@ -62,5 +62,11 @@ class DiffTest extends AbstractClientTest {
 """.format(node0.short, node1.short)
     assertEquals(diff4, client.diff(revs = List(node0, node1), noDates = true))
   }
+
+  @Test
+  def testBasicPlain {
+    write(".hg/hgrc", "[defaults]\ndiff=--git\n")
+    testBasic
+  }
 }
 

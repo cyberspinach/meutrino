@@ -100,8 +100,8 @@ class CommandServerFactory(hg: String, config: CommandServerConfig = new Command
     val env: java.util.Map[String, String] = processBuilder.environment()
     //see http://selenic.com/hg/file/3e13ade423f0/mercurial/help/environment.txt
     //disables any configuration settings that might change Mercurial's default output.
-    //(the value is not important)
-    env.put("HGPLAIN", "True")
+    //(the value is not important, '1' is used to stay the same with hglib version 0.3)
+    env.put("HGPLAIN", "1") //always set HGPLAIN=1 (issue3502)
     //This overrides the default locale setting detected by Mercurial,
     //UTF-8 is always used
     env.put("HGENCODING", charSet.displayName)
