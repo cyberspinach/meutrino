@@ -38,9 +38,8 @@ object Dependencies {
 object MeutrinoBuild extends Build {
     import BuildSettings._
     import Dependencies._
-    import Resolvers._
 
-    override lazy val settings = super.settings ++ globalSettings
+  override lazy val settings = super.settings ++ globalSettings
 
     lazy val root = Project("meutrino",
                            file("."),

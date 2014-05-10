@@ -18,9 +18,7 @@ package org.quartzsource.meutrino.client
 
 import org.junit.Assert._
 import org.junit.Test
-import org.quartzsource.meutrino.CommandException
 import java.util.Date
-import org.quartzsource.meutrino.QNodeId
 import org.quartzsource.meutrino.QRevision
 import org.quartzsource.meutrino.QuartzException
 

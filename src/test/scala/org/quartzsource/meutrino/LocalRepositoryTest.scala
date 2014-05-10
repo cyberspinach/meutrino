@@ -16,7 +16,6 @@
 
 package org.quartzsource.meutrino
 
-import org.junit.Assert._
 import org.junit.Test
 import org.quartzsource.meutrino.client.CommandServerFactory;
 import java.io.File

@@ -16,8 +16,11 @@
 
 package org.quartzsource.javaexamples;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.apache.commons.io.FileUtils;
+import org.junit.Test;
+import org.quartzsource.meutrino.*;
+import scala.Option;
+import scala.Tuple2;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,18 +28,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
-import org.junit.Test;
-import org.quartzsource.meutrino.ADDED$;
-import org.quartzsource.meutrino.Converter;
-import org.quartzsource.meutrino.JavaQRepository;
-import org.quartzsource.meutrino.QChangeContext;
-import org.quartzsource.meutrino.QNodeId;
-import org.quartzsource.meutrino.QPath;
-import org.quartzsource.meutrino.QStatus;
-
-import scala.Option;
-import scala.Tuple2;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class QChangeContextTest {
 

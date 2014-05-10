@@ -16,21 +16,16 @@
 
 package org.quartzsource.javaexamples;
 
+import org.junit.Test;
+import org.quartzsource.meutrino.*;
+import org.quartzsource.meutrino.client.CommandServerConfig;
+import org.quartzsource.meutrino.client.CommandServerFactory;
+import scala.Option;
+import scala.Tuple2;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
-
-import org.junit.Test;
-import org.quartzsource.meutrino.Converter;
-import org.quartzsource.meutrino.QNodeId;
-import org.quartzsource.meutrino.QPath;
-import org.quartzsource.meutrino.QRepository;
-import org.quartzsource.meutrino.QStatus;
-import org.quartzsource.meutrino.client.CommandServerConfig;
-import org.quartzsource.meutrino.client.CommandServerFactory;
-
-import scala.Option;
-import scala.Tuple2;
 
 public class CommandServerFactoryTest {
 

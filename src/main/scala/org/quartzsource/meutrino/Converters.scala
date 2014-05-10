@@ -16,8 +16,6 @@
 
 package org.quartzsource.meutrino
 
-import scala.collection.JavaConverters._
-
 /**
  * Utility for Java users
  */

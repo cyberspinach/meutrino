@@ -18,7 +18,6 @@ package org.quartzsource.meutrino.client
 
 import org.junit.Assert._
 import org.junit.Test
-import org.quartzsource.meutrino.CommandException
 import java.util.Date
 
 class DateTest extends AbstractClientTest {

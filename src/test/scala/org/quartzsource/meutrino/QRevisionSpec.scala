@@ -16,8 +16,6 @@
 
 package org.quartzsource.meutrino
 
-import org.scalatest.FunSuite
-import scala.collection.mutable.Stack
 import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
 import org.scalatest.Matchers

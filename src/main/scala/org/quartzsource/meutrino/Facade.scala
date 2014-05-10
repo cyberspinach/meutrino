@@ -20,8 +20,7 @@ import java.io.File
 import java.util.Date
 
 import scala.collection.immutable.SortedMap
-import scala.collection.immutable.TreeMap
-import scala.reflect.BeanProperty
+import scala.beans.BeanProperty
 
 case class QVersion(@BeanProperty major: Int, @BeanProperty minor: Int, @BeanProperty fix: Int) {
   require(major >= 1)
