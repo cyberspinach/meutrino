@@ -18,8 +18,7 @@ package org.quartzsource.meutrino.hglib
 
 import org.junit.Assert._
 import org.junit.Test
-import org.quartzsource.meutrino.QBookmark
-import org.quartzsource.meutrino.CommandException
+import org.quartzsource.meutrino.{QNodeId, QBookmark, CommandException}
 import org.quartzsource.meutrino.client.AbstractClientTest
 
 class BookmarksTest extends AbstractClientTest {
@@ -35,12 +34,16 @@ class BookmarksTest extends AbstractClientTest {
     append("a", "a")
     val (rev1, node1) = client.commit("second")
 
-    client.bookmark("0", Some(rev0))
-    assertEquals(List((QBookmark("0", false), rev0, node0)), client.bookmarks())
+    client.bookmark("zero", Some(rev0))
+    assertEquals(List((QBookmark("zero", false), rev0, node0)), client.bookmarks())
 
-    client.bookmark("1", Some(rev1))
-    assertEquals(List((QBookmark("0", false), rev0, node0),
-      (QBookmark("1", true), rev1, node1)), client.bookmarks())
+    client.bookmark("one", Some(rev1))
+    assertEquals((QBookmark("one", false), rev1, node1), client.bookmarks().head)
+    val expected: List[(QBookmark, Int, QNodeId)] = List(
+      (QBookmark("one", false), rev1, node1),
+      (QBookmark("zero", false), rev0, node0)
+    )
+    assertEquals(expected, client.bookmarks())
   }
 
   @Test
@@ -51,8 +54,8 @@ class BookmarksTest extends AbstractClientTest {
     append("a", "a")
     val (rev1, node1) = client.commit("second")
 
-    client.bookmark("0")
-    assertEquals(List((QBookmark("0", true), rev1, node1)), client.bookmarks())
+    client.bookmark("zero")
+    assertEquals(List((QBookmark("zero", true), rev1, node1)), client.bookmarks())
   }
 
   @Test
@@ -73,13 +76,13 @@ class BookmarksTest extends AbstractClientTest {
     append("a", "a")
     val (rev1, node1) = client.commit("second")
 
-    client.bookmark("0", inactive = true)
-    assertEquals(List((QBookmark("0", false), rev1, node1)), client.bookmarks())
+    client.bookmark("zero", inactive = true)
+    assertEquals(List((QBookmark("zero", false), rev1, node1)), client.bookmarks())
 
-    client.bookmark("1", rename = Some("0"))
-    assertEquals(List((QBookmark("1", false), rev1, node1)), client.bookmarks())
+    client.bookmark("one", rename = Some("zero"))
+    assertEquals(List((QBookmark("one", false), rev1, node1)), client.bookmarks())
 
-    client.bookmark("1", delete = true)
+    client.bookmark("one", delete = true)
     assertEquals((List()), client.bookmarks())
   }
 
