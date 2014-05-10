@@ -28,7 +28,7 @@ class NoUserInputException(message: String) extends QuartzException(message)
 class CommandServerException(message: String) extends QuartzException(message)
 class CommandException(val code: Int, val output: String, val error: String) extends CommandServerException(error) {
   override def toString(): String = {
-    "code: '%s', output: '%s', error: '%s'".format(code, output, error)
+    "code: '%s', output: '%s', error: '%s'".format(code, output.trim, error.trim)
   }
 }
 

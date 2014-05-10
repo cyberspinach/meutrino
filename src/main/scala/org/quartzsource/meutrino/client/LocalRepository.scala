@@ -268,7 +268,7 @@ class LocalRepository(commandServer: CommandServer) extends QRepository with Jav
   def log(files: List[QPath], revRange: List[String], follow: Boolean,
     date: Option[Date], copies: Boolean, keyword: List[String],
     removed: Boolean, user: List[String],
-    branch: List[String], prune: List[QNodeId],
+    branch: List[String], prune: List[QNodeId], hidden: Boolean,
     limit: Option[Int], noMerges: Boolean): List[QRevision] = {
     val data = runCommand[String]("log", option("rev", revRange) ++
       List("--template", TEMPLATE) ++
@@ -280,6 +280,7 @@ class LocalRepository(commandServer: CommandServer) extends QRepository with Jav
       option("user", user) ++
       option("branch", branch) ++
       option("prune", prune.map(_.node)) ++
+      option("hidden", hidden) ++
       option("limit", limit) ++
       option("no-merges", noMerges) ++
       files.map(_.path))(processOutput)
@@ -456,9 +457,17 @@ class LocalRepository(commandServer: CommandServer) extends QRepository with Jav
       (code, output, error) =>
         {
           processBoolean(code, output, error) //check 0 or 1 returned
-          val line = output.split("\n").filterNot(_.startsWith("merging ")).head.trim
-          val counters = line.split(", ").map(_.split(" ", 2)(0).toInt)
-          (counters(0), counters(1), counters(2), counters(3))
+          /*
+          merging a
+          0 files updated, 0 files merged, 0 files removed, 1 files unresolved
+          use 'hg resolve' to retry unresolved file merges
+           */
+          val filesPattern = """(\d+).+, (\d+).+, (\d+).+, (\d+)""".r
+          val numbers = for (m <- filesPattern findFirstMatchIn output) yield (m.group(1), m.group(2), m.group(3), m.group(4))
+          numbers match {
+            case Some((updated,  merged, removed, unresolved)) => (updated.toInt,  merged.toInt, removed.toInt, unresolved.toInt)
+            case None => throw new RuntimeException
+          }
         }
     }
     data

@@ -15,6 +15,7 @@
  */
 
 package org.quartzsource.meutrino.client
+
 import org.quartzsource.meutrino.QChangeContext
 import org.quartzsource.meutrino.QPath
 import org.quartzsource.meutrino.QRevision
@@ -29,6 +30,23 @@ import org.quartzsource.meutrino.CLEAN
 import scala.collection.immutable.TreeMap
 import scala.collection.immutable.SortedMap
 import java.util.Date
+import java.lang.IllegalArgumentException
+
+object ChangeContext {
+  def toCset(repo: QRepository, revset: String): QRevision = {
+    val cset: Option[List[QRevision]] = try {
+      Some(repo.log(revRange = List(revset)))
+    } catch {
+      case _: Exception => None
+    }
+    cset match {
+      case None => throw new IllegalArgumentException(s"changeid ${revset} not found in repo")
+      case Some(Nil) => throw new IllegalArgumentException(s"changeid ${revset} not found in repo")
+      case Some(head :: Nil) => head
+      case _ => throw new IllegalArgumentException(s"changeid must yield a single changeset")
+    }
+  }
+}
 
 final class ChangeContext(repo: QRepository, cset: QRevision) extends QChangeContext {
   lazy val rev = cset.rev
@@ -40,7 +58,7 @@ final class ChangeContext(repo: QRepository, cset: QRevision) extends QChangeCon
   lazy val date: Date = cset.date
 
   def this(repo: QRepository, revset: String) = {
-    this(repo, repo.log(revRange = List(revset)).head)
+    this(repo, ChangeContext.toCset(repo, revset))
   }
 
   override def toString() = "<changectx %s>".format(node.node.substring(0, 12))
@@ -55,7 +73,7 @@ final class ChangeContext(repo: QRepository, cset: QRevision) extends QChangeCon
   def status(ignored: Boolean = false, clean: Boolean = false): Map[QStatus, List[QPath]] = {
     val origin: List[(QStatus, QPath)] = repo.status(change = Some(node), ignored = ignored, clean = clean)
     val grouped = origin.groupBy(tuple => tuple._1) //group by status
-    val stat = grouped.map { case (status, paths) => (status, paths.map(t => t._2)) } //remove status from values
+    val stat = grouped.map { case (status, paths) => (status, paths.map(t => t._2))} //remove status from values
     //TODO decide what to do with unknown, ignored and clean status
     stat
   }
@@ -66,11 +84,12 @@ final class ChangeContext(repo: QRepository, cset: QRevision) extends QChangeCon
   lazy val removed = status().getOrElse(REMOVED, Nil)
 
   def ignored = status(ignored = true).getOrElse(IGNORED, Nil)
+
   def clean = status(clean = true).getOrElse(CLEAN, Nil)
 
   lazy val manifest: SortedMap[QPath, QNodeId] = {
     val list: List[(QNodeId, String, Boolean, Boolean, QPath)] = repo.manifest(Some(node))
-    val selection: List[(QPath, QNodeId)] = list.map { case (node, _, _, _, path) => (path, node) }
+    val selection: List[(QPath, QNodeId)] = list.map { case (node, _, _, _, path) => (path, node)}
     TreeMap(selection: _*)
   }
 
@@ -84,6 +103,7 @@ final class ChangeContext(repo: QRepository, cset: QRevision) extends QChangeCon
   }
 
   def p1: QChangeContext = parents.head
+
   def p2: QChangeContext = parents match {
     case _ :: parent2 :: Nil => parent2
     case _ => new ChangeContext(repo, QRevision())

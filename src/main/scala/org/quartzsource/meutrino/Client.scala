@@ -80,6 +80,13 @@ trait QRepository {
   def bookmark(name: String, rev: Option[Int] = None, force: Boolean = false, delete: Boolean = false,
     inactive: Boolean = false, rename: Option[String] = None): Unit
 
+  //TODO
+  /*
+        Return the bookmarks as a list of (name, rev, node) and the index of the
+        current one.
+
+        If there isn't a current one, -1 is returned as the index.
+   */
   /**
    * Return the bookmarks as a list of (bookmark, rev, node).
    */
@@ -292,6 +299,7 @@ trait QRepository {
    * user - revisions committed by user
    * branch - show changesets within the given named branch
    * prune - do not display revision or any of its ancestors
+   * hidden - show hidden changesets
    * limit - limit number of changes displayed
    * nomerges - do not show merges
    */
@@ -299,7 +307,7 @@ trait QRepository {
     date: Option[Date] = None, copies: Boolean = false,
     keyword: List[String] = Nil,
     removed: Boolean = false, user: List[String] = Nil,
-    branch: List[String] = Nil, prune: List[QNodeId] = Nil,
+    branch: List[String] = Nil, prune: List[QNodeId] = Nil,  hidden: Boolean = false,
     limit: Option[Int] = None, noMerges: Boolean = false): List[QRevision]
 
   /**
