@@ -46,5 +46,7 @@ diff -r 000000000000 -r c103a3dec114 a
     //println(output)
     assertEquals("1\n", client.cat(QPath("a")))
   }
+
+  //TODO def test_basic_file(self):
 }
 

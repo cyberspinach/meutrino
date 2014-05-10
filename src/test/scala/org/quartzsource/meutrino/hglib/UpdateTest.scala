@@ -112,5 +112,7 @@ class UpdateTest extends AbstractClientTest {
     write(".hg/hgrc", "[defaults]\nupdate=-v\n")
     testBasic
   }
+
+  //TODO def test_largefiles(self):
 }
 

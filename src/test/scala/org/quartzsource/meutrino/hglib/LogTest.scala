@@ -38,6 +38,8 @@ class LogTest extends AbstractClientTest {
     assertEquals(client.log(revRange = List("0"))(0), revs(0))
 
     assertEquals(client.log(), client.log(files = List(QPath("a"))))
+
+    //TODO self.assertEquals(self.client.log(), self.client.log(hidden=True))
   }
 }
 
