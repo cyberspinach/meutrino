@@ -97,7 +97,7 @@ class UpdateTest extends AbstractClientTest {
       client.update(check = true)
       fail()
     } catch {
-      case e: Exception => assertEquals("abort: uncommitted local changes\n", e.getMessage())
+      case e: Exception => assertEquals("abort: uncommitted changes\n", e.getMessage())
     }
     val (u, m, r, ur) = client.update(clean = true)
     assertEquals(1, u)

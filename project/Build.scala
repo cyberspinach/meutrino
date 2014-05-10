@@ -7,7 +7,7 @@ object BuildSettings {
 
     val buildOrganization = "org.quartzsource.meutrino"
     val buildVersion = "0.1"
-    val buildScalaVersion = "2.9.1"
+    val buildScalaVersion = "2.10.4"
 
     val globalSettings = Seq(
         organization := buildOrganization,
@@ -27,7 +27,7 @@ object Resolvers {
 }
 
 object Dependencies {
-    val scalatest = "org.scalatest" %% "scalatest" % "1.7.1" % "test"
+    val scalatest = "org.scalatest" %% "scalatest" % "2.1.6" % "test"
     val junit = "junit" % "junit" % "4.7" % "test"
     
     val junitInterface = "com.novocode" % "junit-interface" % "0.6" % "test"

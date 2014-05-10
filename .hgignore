@@ -2,6 +2,8 @@ syntax: regexp
 ^target$
 ^.target$
 ^.cache$
+^.idea$
+^.idea_modules$
 /*/\.cache$
 /*/target$
 /*/bin$
