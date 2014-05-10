@@ -115,6 +115,7 @@ class CommandServer(val path: File, process: Process, sync: Boolean = false) {
           writeBlock(userData)
           runChannel(out, err)
         }
+        case unexpected => throw new RuntimeException(s"Unexpected read: ${unexpected}")
       }
     }
 

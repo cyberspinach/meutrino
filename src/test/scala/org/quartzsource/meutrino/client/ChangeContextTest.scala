@@ -69,7 +69,7 @@ class ChangeContextTest extends AbstractClientTest {
     val cxt1 = client(node1)
     assertFalse(cxt0.hashCode() == cxt1.hashCode())
     assertFalse(cxt0 == cxt1)
-    assertFalse(cxt0 == cxt0.node)
+    assertFalse(cxt1.node == cxt0.node)
     assertEquals(cxt0, client(node))
     val set = Set(cxt0, cxt1, cxt0, cxt1)
     assertEquals(2, set.size)

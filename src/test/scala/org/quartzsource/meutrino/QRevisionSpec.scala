@@ -20,12 +20,12 @@ import org.scalatest.FunSuite
 import scala.collection.mutable.Stack
 import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.FunSpec
 import java.util.Date
 
 @RunWith(classOf[JUnitRunner])
-class QRevisionSpec extends FunSpec with ShouldMatchers {
+class QRevisionSpec extends FunSpec with Matchers {
 
   describe("A QRevision") {
 

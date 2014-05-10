@@ -504,7 +504,6 @@ class LocalRepository(commandServer: CommandServer) extends QRepository with Jav
 
   def close() = {
     commandServer.stop
-    true
   }
 
   /**
