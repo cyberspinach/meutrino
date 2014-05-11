@@ -258,7 +258,7 @@ class LocalRepository(commandServer: CommandServer) extends QRepository with Jav
   def incomingBookmarks(revRange: Option[String] = None, path: Option[String] = None, force: Boolean = false, newest: Boolean = false,
     branch: Option[String] = None, limit: Option[Int] = None,
     noMerges: Boolean = false, subrepos: Boolean = false): List[(String, String)] = {
-    val data = runCommand[List[(String, String)]]("incoming", option("rev", revRange) ++ List("--bookmarks") ++
+    val data = runCommand[List[(String, String)]]("incoming", option("rev", revRange) ++ List("--bookmarks", "--debug") ++
       option("force", force) ++ option("newest-first", newest) ++
       option("no-merges", noMerges) ++ option("subrepos", subrepos) ++
       option("branch", branch) ++ option("limit", limit) ++ path.toList)(processBookmarks)
@@ -346,7 +346,7 @@ class LocalRepository(commandServer: CommandServer) extends QRepository with Jav
     force: Boolean = false, newest: Boolean = false,
     branch: Option[String] = None, limit: Option[Int] = None,
     noMerges: Boolean = false, subrepos: Boolean = false): List[(String, String)] = {
-    val data = runCommand[List[(String, String)]]("outgoing", option("rev", revRange) ++ List("--bookmarks") ++
+    val data = runCommand[List[(String, String)]]("outgoing", option("rev", revRange) ++ List("--bookmarks", "--debug") ++
       option("force", force) ++ option("newest-first", newest) ++
       option("no-merges", noMerges) ++ option("subrepos", subrepos) ++
       option("branch", branch) ++ option("limit", limit) ++ path.toList)(processBookmarks)
@@ -596,10 +596,12 @@ class LocalRepository(commandServer: CommandServer) extends QRepository with Jav
       val splitted = if (noHeader.trim == "") Nil else noHeader.trim.split('\n').toList
       val bookmarks = splitted.map(line => {
         //bookmarks may contain spaces
-        val t = line.reverse.split(" ", 2).map(_.reverse)
-        //TODO report a bug: Mercurial does not show the complete revision even when --debug option is specified
+        val t = line.trim.reverse.split(" ", 2).map(_.reverse)
         (t(1).trim, t(0).trim)
-      })
+      }).filter { case (_, revision) =>
+        //filter out debug info
+        revision.matches("[0-9a-z]{40}")
+      }
       bookmarks
     }
     case _ => throw new CommandException(code, output, warning)
