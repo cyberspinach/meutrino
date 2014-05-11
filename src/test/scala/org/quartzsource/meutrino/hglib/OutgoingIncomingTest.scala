@@ -68,8 +68,8 @@ class OutgoingIncomingTest extends AbstractClientTest {
     val other = factory.open(new File(rootFolder, "other"))
 
     client.bookmark("bm1", Some(1))
-    assertEquals(List(("bm1", client.tip().node.node)), other.incomingBookmarks())
-    assertEquals(List(("bm1", client.tip().node.node)), client.outgoingBookmarks(path = Some("other")))
+    assertEquals(List(("bm1", client.tip().node)), other.incomingBookmarks())
+    assertEquals(List(("bm1", client.tip().node)), client.outgoingBookmarks(path = Some("other")))
   }
 
 }

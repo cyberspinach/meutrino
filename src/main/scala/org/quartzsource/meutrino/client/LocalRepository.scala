@@ -257,8 +257,8 @@ class LocalRepository(commandServer: CommandServer) extends QRepository with Jav
   }
   def incomingBookmarks(revRange: Option[String] = None, path: Option[String] = None, force: Boolean = false, newest: Boolean = false,
     branch: Option[String] = None, limit: Option[Int] = None,
-    noMerges: Boolean = false, subrepos: Boolean = false): List[(String, String)] = {
-    val data = runCommand[List[(String, String)]]("incoming", option("rev", revRange) ++ List("--bookmarks", "--debug") ++
+    noMerges: Boolean = false, subrepos: Boolean = false): List[(String, QNodeId)] = {
+    val data = runCommand[List[(String, QNodeId)]]("incoming", option("rev", revRange) ++ List("--bookmarks", "--debug") ++
       option("force", force) ++ option("newest-first", newest) ++
       option("no-merges", noMerges) ++ option("subrepos", subrepos) ++
       option("branch", branch) ++ option("limit", limit) ++ path.toList)(processBookmarks)
@@ -345,8 +345,8 @@ class LocalRepository(commandServer: CommandServer) extends QRepository with Jav
   def outgoingBookmarks(revRange: Option[String] = None, path: Option[String] = None,
     force: Boolean = false, newest: Boolean = false,
     branch: Option[String] = None, limit: Option[Int] = None,
-    noMerges: Boolean = false, subrepos: Boolean = false): List[(String, String)] = {
-    val data = runCommand[List[(String, String)]]("outgoing", option("rev", revRange) ++ List("--bookmarks", "--debug") ++
+    noMerges: Boolean = false, subrepos: Boolean = false): List[(String, QNodeId)] = {
+    val data = runCommand[List[(String, QNodeId)]]("outgoing", option("rev", revRange) ++ List("--bookmarks", "--debug") ++
       option("force", force) ++ option("newest-first", newest) ++
       option("no-merges", noMerges) ++ option("subrepos", subrepos) ++
       option("branch", branch) ++ option("limit", limit) ++ path.toList)(processBookmarks)
@@ -589,7 +589,7 @@ class LocalRepository(commandServer: CommandServer) extends QRepository with Jav
     case _ => throw new CommandException(code, output, warning)
   }
 
-  private def processBookmarks(code: Int, output: String, warning: String): List[(String, String)] = code match {
+  private def processBookmarks(code: Int, output: String, warning: String): List[(String, QNodeId)] = code match {
     case 1 => Nil
     case 0 => {
       val noHeader = eat2Lines(output)
@@ -600,8 +600,8 @@ class LocalRepository(commandServer: CommandServer) extends QRepository with Jav
         (t(1).trim, t(0).trim)
       }).filter { case (_, revision) =>
         //filter out debug info
-        revision.matches("[0-9a-z]{40}")
-      }
+        QNodeId.isValid(revision)
+      }.map { case (name, revision) => (name, QNodeId(revision))}
       bookmarks
     }
     case _ => throw new CommandException(code, output, warning)

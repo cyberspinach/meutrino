@@ -44,9 +44,15 @@ case class QPath(@BeanProperty path: String) extends Ordered[QPath] {
   }
 }
 
+object QNodeId {
+  val NodeRE = "[0-9a-f]{40}".r
+  def isValid(node: String): Boolean  = {
+    NodeRE.pattern.matcher(node).matches
+  }
+}
 case class QNodeId(@BeanProperty node: String) {
   require(node != null)
-  require(node.matches("[0-9a-f]{40}"), "Wrong node: '%s'".format(node))
+  require(QNodeId.isValid(node), "Wrong node: '%s'".format(node))
 
   @BeanProperty lazy val short = node.substring(0, 12)
 

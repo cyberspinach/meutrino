@@ -276,7 +276,7 @@ trait QRepository {
   def incomingBookmarks(revRange: Option[String] = None, path: Option[String] = None,
     force: Boolean = false, newest: Boolean = false,
     branch: Option[String] = None, limit: Option[Int] = None,
-    noMerges: Boolean = false, subrepos: Boolean = false): List[(String, String)]
+    noMerges: Boolean = false, subrepos: Boolean = false): List[(String, QNodeId)]
 
   /**
    * Return the revision history of the specified files or the entire project.
@@ -370,7 +370,7 @@ trait QRepository {
   def outgoingBookmarks(revRange: Option[String] = None, path: Option[String] = None,
     force: Boolean = false, newest: Boolean = false,
     branch: Option[String] = None, limit: Option[Int] = None,
-    noMerges: Boolean = false, subrepos: Boolean = false): List[(String, String)]
+    noMerges: Boolean = false, subrepos: Boolean = false): List[(String, QNodeId)]
 
   /**
    * Return the working directory's parent revisions. If rev is given, the
