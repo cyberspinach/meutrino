@@ -120,7 +120,7 @@ class CommandServer(val path: File, process: Process, sync: Boolean = false) {
     }
 
     outputStream.write("runcommand\n".getBytes(charSet))
-    writeBlock(args.mkString("\0").getBytes(charSet))
+    writeBlock(args.mkString("\u0000").getBytes(charSet))
     val (code, resultOut, resultErr) = runChannel(Array[Byte](), Array[Byte]())
     (code, new String(resultOut, "UTF-8"), new String(resultErr, "UTF-8"))
   }

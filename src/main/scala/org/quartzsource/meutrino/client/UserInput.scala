@@ -65,7 +65,6 @@ class UserInputStream(data: InputStream) extends UserInput {
     buffer.take(count)
   }
 
-  //TODO mutable local data !
   def readLine(size: Int, prompt: String): Array[Byte] = {
     val out = new ByteArrayOutputStream(size)
     var ch: Int = buffered.read()

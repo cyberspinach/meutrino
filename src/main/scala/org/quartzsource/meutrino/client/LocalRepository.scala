@@ -288,7 +288,7 @@ class LocalRepository(commandServer: CommandServer) extends QRepository with Jav
   }
 
   private def parseRevs(data: String): List[QRevision] = {
-    val splitted = if (data.trim == "") Nil else data.trim.split('\0').toList
+    val splitted = if (data.trim == "") Nil else data.trim.split('\u0000').toList
     val grouped = splitted.grouped(7).map(QRevision(_))
     grouped.toList
   }
@@ -419,7 +419,7 @@ class LocalRepository(commandServer: CommandServer) extends QRepository with Jav
       (code, output, error) =>
         {
           val data = processOutput(code, output, error)
-          val resources = data.split("\0").toList.filter(_.size != 0).map(line => parseStateLine(line))
+          val resources = data.split("\u0000").toList.filter(_.size != 0).map(line => parseStateLine(line))
           resources
         }
     }
