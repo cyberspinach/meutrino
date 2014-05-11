@@ -37,7 +37,7 @@ class ContextTest extends AbstractClientTest {
     val ctx = client(node0)
 
     assertEquals("first", ctx.description)
-    assertEquals("<changectx %s>".format(node0.short), ctx.toString)
+    assertEquals(s"<changectx ${node0.short}>", ctx.toString)
     assertEquals(node0, ctx.node)
     assertEquals(rev0, ctx.rev)
     assertEquals("default", ctx.branch)

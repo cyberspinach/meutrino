@@ -322,7 +322,7 @@ class LocalRepository(commandServer: CommandServer) extends QRepository with Jav
   }
 
   def mergePreview(mergeRevision: QNodeId): List[QRevision] = {
-    val revset = "ancestors(%s)-ancestors(.)".format(mergeRevision)
+    val revset = s"ancestors(${mergeRevision})-ancestors(.)"
     val data = runCommand[String]("log",
       List("--rev", revset, "--template", TEMPLATE))(processOutput)
     parseRevs(data)
@@ -552,7 +552,7 @@ class LocalRepository(commandServer: CommandServer) extends QRepository with Jav
     case Some(d) => {
       val zone: TimeZone = TimeZone.getDefault()
       val offset = -zone.getOffset(d.getTime()) / 1000
-      val formatted = "%s %s".format(d.getTime() / 1000, offset)
+      val formatted = s"${d.getTime() / 1000} ${offset}"
       List("--date", formatted)
     }
   }

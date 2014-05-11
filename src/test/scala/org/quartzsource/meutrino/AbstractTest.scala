@@ -31,9 +31,8 @@ abstract class AbstractTest {
 
   def getTestFolder(seed: Int = 0): File = {
     val path = getTempFolder
-    val now = new Date()
     val folder = new File(path + File.separator + getClass().toString.dropWhile(!_.isUpper) +
-      "-" + System.currentTimeMillis().toString() + (if (seed > 0) "-%s".format(seed) else ""))
+      "-" + System.currentTimeMillis().toString() + (if (seed > 0) s"-${seed}" else ""))
     folder.mkdir()
     folder
   }

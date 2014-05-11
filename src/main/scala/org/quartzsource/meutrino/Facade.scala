@@ -27,7 +27,7 @@ case class QVersion(@BeanProperty major: Int, @BeanProperty minor: Int, @BeanPro
   require(minor >= 0)
   require(fix >= 0)
 
-  override def toString(): String = "%s.%s.%s".format(major, minor, fix)
+  override def toString(): String = s"${major}.${minor}.${fix}"
 }
 
 /**
@@ -52,7 +52,7 @@ object QNodeId {
 }
 case class QNodeId(@BeanProperty node: String) {
   require(node != null)
-  require(QNodeId.isValid(node), "Wrong node: '%s'".format(node))
+  require(QNodeId.isValid(node), s"Wrong node: '${node}'")
 
   @BeanProperty lazy val short = node.substring(0, 12)
 
@@ -60,7 +60,7 @@ case class QNodeId(@BeanProperty node: String) {
 }
 
 sealed abstract class QStatus(val char: Char) {
-  override def toString(): String = "'%s'".format(char)
+  override def toString(): String = s"'${char}'"
 }
 case object ADDED extends QStatus('A')
 case object CLEAN extends QStatus('C')
@@ -87,7 +87,7 @@ case class QBookmark(@BeanProperty name: String, @BeanProperty active: Boolean) 
 
 case class QRevision(data: List[String]) {
   require(data != null)
-  require(data.size == 7, "Revision must contain 7 strings but was: %s (%s)".format(data.size, data.mkString))
+  require(data.size == 7, s"Revision must contain 7 strings but was: ${data.size} (${data.mkString})")
   //BeanProperty annotation is used for happy Java developers
   @BeanProperty lazy val rev: Int = data(0).toInt
   @BeanProperty lazy val node: QNodeId = QNodeId(data(1))
@@ -104,7 +104,7 @@ case class QRevision(data: List[String]) {
   }
   lazy val toInt: Int = rev
 
-  override def toString(): String = "<revision %s>".format(data.mkString(", "))
+  override def toString(): String = s"<revision ${data.mkString(", ")}>"
 }
 object QRevision {
   /**

@@ -30,7 +30,7 @@ class CommandServerFactoryTest extends AbstractTest {
     version match {
       case QVersion(1, minor, _) => assertEquals(9, minor)
       case QVersion(2, _, _) => // Ok
-      case v => fail("Unsupported version: %s".format(v))
+      case v => fail(s"Unsupported version: ${v}")
     }
   }
 

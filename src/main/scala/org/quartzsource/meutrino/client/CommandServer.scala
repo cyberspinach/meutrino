@@ -52,11 +52,11 @@ class CommandServer(val path: File, process: Process, sync: Boolean = false) {
           (parsedLine(0) -> parsedLine(1).trim)
         }).toMap
         if (fields("encoding") != "UTF-8")
-          throw new CommandServerException("Unexpected encoding: '%s'".format(fields("encoding")))
+          throw new CommandServerException(s"Unexpected encoding: '${fields("encoding")}'")
         if (!fields("capabilities").contains("runcommand"))
           throw new CommandServerException("'runcommand' capability is required.")
       }
-      case error => throw new ResponseException("Unexpected hello message '%s'".format(error.toString()))
+      case error => throw new ResponseException(s"Unexpected hello message '${error.toString()}'")
     }
   }
 
@@ -84,7 +84,7 @@ class CommandServer(val path: File, process: Process, sync: Boolean = false) {
         val returnCode = readInt(read(input, result, "Unexpected end of result channel struct."), 0)
         ReturnChannel(returnCode)
       }
-      case ch if ch.isUpper => throw new ResponseException("Unexpected data on required channel '%s'".format(ch))
+      case ch if ch.isUpper => throw new ResponseException(s"Unexpected data on required channel '${ch}'")
       case ch => OptionalChannel(ch)
     }
   }

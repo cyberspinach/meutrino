@@ -61,7 +61,7 @@ final class ChangeContext(repo: QRepository, cset: QRevision) extends QChangeCon
     this(repo, ChangeContext.toCset(repo, revset))
   }
 
-  override def toString() = "<changectx %s>".format(node.node.substring(0, 12))
+  override def toString() = s"<changectx ${node.node.substring(0, 12)}>"
 
   override def equals(other: Any): Boolean = other match {
     case that: ChangeContext => rev == that.rev
@@ -115,7 +115,7 @@ final class ChangeContext(repo: QRepository, cset: QRevision) extends QChangeCon
   }
 
   private def logChildren(name: String): List[QChangeContext] = {
-    repo.log(revRange = List("%s(%s)".format(name, node))).map(new ChangeContext(repo, _))
+    repo.log(revRange = List(s"${name}(${node})")).map(new ChangeContext(repo, _))
   }
 
   def children: List[QChangeContext] = {
@@ -131,7 +131,7 @@ final class ChangeContext(repo: QRepository, cset: QRevision) extends QChangeCon
   }
 
   def ancestor(node2: QNodeId): QChangeContext = {
-    val revRange = List("ancestor(%s,%s)".format(node, node2.node))
+    val revRange = List(s"ancestor(${node},${node2.node})")
     val cset :: Nil = repo.log(revRange = revRange).map(new ChangeContext(repo, _))
     cset
   }

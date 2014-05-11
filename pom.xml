@@ -6,7 +6,7 @@
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <scala.version>2.9.0</scala.version>
+        <scala.version>2.10.4</scala.version>
         <maven.plugin.version>2.15.2</maven.plugin.version>
     </properties>
     <name>Meutrino</name>
@@ -38,8 +38,8 @@
         </dependency>
         <dependency>
             <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_2.9.0</artifactId>
-            <version>1.7.1</version>
+            <artifactId>scalatest_2.10</artifactId>
+            <version>2.1.6</version>
             <scope>test</scope>
         </dependency>
         <dependency>

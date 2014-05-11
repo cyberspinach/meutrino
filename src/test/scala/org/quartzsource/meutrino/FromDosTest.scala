@@ -53,7 +53,7 @@ class FromDosTest extends AbstractTest {
   }
 
   def isIn(name: String, folder: String): Boolean = {
-    val f = "%s%s%s".format(File.separator, folder, File.separator)
+    val f = s"${File.separator}${folder}${File.separator}"
     name.contains(f)
   }
 
