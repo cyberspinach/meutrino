@@ -6,7 +6,7 @@ object BuildSettings {
     import Resolvers._
 
     val buildOrganization = "org.quartzsource.meutrino"
-    val buildVersion = "0.1"
+    val buildVersion = "1.2"
     val buildScalaVersion = "2.10.4"
 
     val globalSettings = Seq(

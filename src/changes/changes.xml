@@ -6,6 +6,11 @@
         <author email="py4fun@gmail.com">Andrey Somov</author>
     </properties>
     <body>
+        <release version="1.2" date="in Mercurial" description="Development">
+            <action dev="py4fun" type="update">
+                Import the changes from hglib version 1.2 (2014-05-17)
+            </action>
+        </release>
         <release version="0.1-SNAPSHOT" date="in Mercurial" description="Development">
             <action dev="py4fun" type="update">
                 Import the test from hglib version 0.3, the code is already properly applied earlier (2012-11-11)
