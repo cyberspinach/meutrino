@@ -80,13 +80,6 @@ trait QRepository {
   def bookmark(name: String, rev: Option[Int] = None, force: Boolean = false, delete: Boolean = false,
     inactive: Boolean = false, rename: Option[String] = None): Unit
 
-  //TODO
-  /*
-        Return the bookmarks as a list of (name, rev, node) and the index of the
-        current one.
-
-        If there isn't a current one, -1 is returned as the index.
-   */
   /**
    * Return the bookmarks as a list of (bookmark, rev, node).
    */
@@ -211,8 +204,33 @@ trait QRepository {
    */
   def forget(files: List[QPath]): Boolean
 
-  //TODO grep command is not yet implemented.
-  def grep(pattern: String): List[List[String]]
+  /**
+   * Search for a pattern in specified files and revisions.
+
+   * This behaves differently than Unix grep. It only accepts Java
+   * regexps. It searches repository history, not the working directory.
+   * It always prints the revision number in which a match appears.
+
+   * Yields (filename, revision, [line, [match status, [user, [date, [match]]]]])
+   * per match depending on the given options.
+
+   * all - print all revisions that match
+   * text - treat all files as text
+   * follow - follow changeset history, or file history across copies and renames
+   * ignorecase - ignore case when matching
+   * fileswithmatches - return only filenames and revisions that match
+   * line - return line numbers in the result tuple
+   * user - return the author in the result tuple
+   * date - return the date in the result tuple
+   * include - include names matching the given patterns
+   * exclude - exclude names matching the given patterns
+   * @param pattern regular expression to find in history
+   * @return found match depending on the given options.
+   */
+  def grep(pattern: String, files: List[QPath] = Nil, all: Boolean = false, text: Boolean = false,
+           follow: Boolean = false, ignoreCase: Boolean = false, filesWithMatches: Boolean = false,
+           line: Boolean = false, user: Boolean = false,
+           date: Boolean = false): List[GrepReply]
 
   /**
    * Return a list of current repository heads or branch heads.

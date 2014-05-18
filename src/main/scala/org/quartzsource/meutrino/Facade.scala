@@ -46,7 +46,7 @@ case class QPath(@BeanProperty path: String) extends Ordered[QPath] {
 
 object QNodeId {
   val NodeRE = "[0-9a-f]{40}".r
-  def isValid(node: String): Boolean  = {
+  def isValid(node: String): Boolean = {
     NodeRE.pattern.matcher(node).matches
   }
 }
@@ -174,3 +174,7 @@ trait QInteractiveMerge {
 trait QInterceptor {
   def report(code: Int, output: String, error: String): Unit
 }
+
+case class GrepReply(filename: String,
+                     revision: String,
+                     result: List[String] = Nil)

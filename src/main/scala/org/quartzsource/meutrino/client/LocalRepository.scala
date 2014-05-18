@@ -32,11 +32,9 @@ class LocalRepository(commandServer: CommandServer) extends QRepository with Jav
 
   /**
    * Run Mercurial command
-   * @param <A> - the result type
    * @param command - Mercurial command
    * @param args - arguments for Mercurial command
-   * @param eh - ErrorHandler in case of non-0 return code
-   * @param userOption - user input
+   * @param userInput - user input
    * @param f - function to translate tuple (output, error) to the result value
    * @return result value
    */
@@ -215,7 +213,41 @@ class LocalRepository(commandServer: CommandServer) extends QRepository with Jav
     data
   }
 
-  def grep(pattern: String): List[List[String]] = throw new UnsupportedOperationException("grep command is not yet implemented.")
+  def grep(pattern: String, files: List[QPath] = Nil, all: Boolean = false, text: Boolean = false,
+            follow: Boolean = false, ignoreCase: Boolean = false, filesWithMatches: Boolean = false,
+            line: Boolean = false, user: Boolean = false,
+            date: Boolean = false): List[GrepReply] =  {
+
+    def processGrepOutput(code: Int, output: String, warning: String): String = {
+      code match {
+        case 0 => output
+        case 1 => ""
+        case _ => throw new CommandException(code, output, warning)
+      }
+    }
+
+    def group(filesWithMatches
+              : Boolean, output: String):  List[GrepReply] = {
+      output.trim  match {
+        case "" => Nil
+        case _ =>
+          val lines = output.split("\n")
+          lines.map { case line =>
+            val lines = line.split(':').toList
+            lines match {
+              case filename :: revision :: tail =>  GrepReply(lines(0), lines(1), tail)
+              case unexpected => throw new CommandServerException(s"Unexpected server output for grep: ${output}")
+            }
+          }.toList
+      }
+    }
+
+    val out = runCommand[String]("grep", option("all", all) ++ option("text", text) ++ option("follow", follow) ++
+      option("ignore-case", ignoreCase) ++ option("files-with-matches", filesWithMatches) ++
+      option("line-number", line) ++ option("user", user) ++
+      option("date", date) ++ List(pattern) ++ files.map(_.path))(processGrepOutput)
+    group(filesWithMatches, out)
+  }
 
   def heads(revs: List[QNodeId], startRev: Option[QNodeId], topological: Boolean,
     closed: Boolean): List[QRevision] = {
